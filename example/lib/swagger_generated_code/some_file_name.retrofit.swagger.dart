@@ -9,6 +9,7 @@ import 'package:collection/collection.dart';
 import 'dart:async';
 
 import 'some_file_name.enums.swagger.dart' as enums;
+import 'some_file_name.freezed.swagger.dart';
 
 part 'some_file_name.retrofit.swagger.g.dart';
 
@@ -26,15 +27,15 @@ abstract class SomeFileName {
 
   /// Finds Pets by status
   @GET('/pet/findByStatus')
-  Future<dynamic> petFindByStatusGet();
+  Future<List<Pet>> petFindByStatusGet();
 
   /// Finds Pets by tags
   @GET('/pet/findByTags')
-  Future<dynamic> petFindByTagsGet();
+  Future<List<Pet>> petFindByTagsGet();
 
   /// Find pet by ID
   @GET('/pet/{petId}')
-  Future<dynamic> petPetIdGet();
+  Future<Pet> petPetIdGet();
 
   /// Updates a pet in the store with form data
   @POST('/pet/{petId}')
@@ -46,19 +47,19 @@ abstract class SomeFileName {
 
   /// uploads an image
   @POST('/pet/{petId}/uploadImage')
-  Future<dynamic> petPetIdUploadImagePost();
+  Future<ApiResponse> petPetIdUploadImagePost();
 
   /// Returns pet inventories by status
   @GET('/store/inventory')
-  Future<dynamic> storeInventoryGet();
+  Future<Object> storeInventoryGet();
 
   /// Place an order for a pet
   @POST('/store/order')
-  Future<dynamic> storeOrderPost();
+  Future<Order> storeOrderPost();
 
   /// Find purchase order by ID
   @GET('/store/order/{orderId}')
-  Future<dynamic> storeOrderOrderIdGet();
+  Future<Order> storeOrderOrderIdGet();
 
   /// Delete purchase order by ID
   @DELETE('/store/order/{orderId}')
@@ -78,7 +79,7 @@ abstract class SomeFileName {
 
   /// Logs user into the system
   @GET('/user/login')
-  Future<dynamic> userLoginGet();
+  Future<String> userLoginGet();
 
   /// Logs out current logged in user session
   @GET('/user/logout')
@@ -86,7 +87,7 @@ abstract class SomeFileName {
 
   /// Get user by user name
   @GET('/user/{username}')
-  Future<dynamic> userUsernameGet();
+  Future<User> userUsernameGet();
 
   /// Updated user
   @PUT('/user/{username}')
