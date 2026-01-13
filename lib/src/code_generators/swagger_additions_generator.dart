@@ -21,6 +21,7 @@ class SwaggerAdditionsGenerator extends SwaggerGeneratorBase {
           .replaceAll('-', '_')
           .replaceAll('.json', '.swagger')
           .replaceAll('.yaml', '.swagger');
+      final fileNameWithoutExtension = removeFileExtension(actualFileName);
       final className = getClassNameFromFileName(actualFileName);
 
       final exports = <String>[];
@@ -28,11 +29,12 @@ class SwaggerAdditionsGenerator extends SwaggerGeneratorBase {
       if (options.generateChopper && !options.buildOnlyModels) {
         exports.add('export \'$fileName.dart\' show $className;');
       } else if (options.generateRetrofit && !options.buildOnlyModels) {
-        exports.add('export \'$fileName.retrofit.swagger.dart\' show $className;');
+        exports.add(
+            'export \'$fileNameWithoutExtension.retrofit.swagger.dart\' show $className;');
       }
 
       if (options.separateModels) {
-        exports.add('export \'$fileName.models.swagger.dart\';');
+        exports.add('export \'$fileNameWithoutExtension.models.swagger.dart\';');
       }
 
       return exports.join('\n');

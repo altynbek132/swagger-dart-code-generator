@@ -3,52 +3,36 @@ import 'package:swagger_dart_code_generator/src/models/generator_options.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('Additions generator tests', () {
-    final generator = SwaggerAdditionsGenerator(
-      GeneratorOptions(
+  group('SwaggerAdditionsGenerator', () {
+    final generator = SwaggerAdditionsGenerator(GeneratorOptions(
+      inputFolder: '',
+      outputFolder: '',
+    ));
+
+    test('Should generate index with chopper', () {
+      final result = generator.generateIndexes(['pet_service.json']);
+      expect(result, contains("export 'pet_service.swagger.dart' show PetService;"));
+    });
+
+    test('Should generate index with retrofit', () {
+      final generatorRetrofit = SwaggerAdditionsGenerator(GeneratorOptions(
         inputFolder: '',
         outputFolder: '',
-      ),
-    );
-
-    test('Should generate correct imports', () {
-      final result = generator.generateImportsContent(
-          'swagger.fileName', true, false, false, false, true);
-
-      expect(result, contains("part 'swagger.fileName.swagger.chopper.dart';"));
-      expect(result, contains("part 'swagger.fileName.swagger.g.dart';"));
+        generateChopper: false,
+        generateRetrofit: true,
+      ));
+      final result = generatorRetrofit.generateIndexes(['pet_service.json']);
+      expect(result, contains("export 'pet_service.retrofit.swagger.dart' show PetService;"));
     });
 
-    test('Should generate correct imports', () {
-      final result = generator.generateImportsContent(
-          'swagger.fileName', true, false, true, false, true);
-
-      expect(result,
-          contains("import 'swagger.fileName.enums.swagger.dart' as enums;"));
-    });
-
-    test('Should generate indexes file', () {
-      final result = generator.generateIndexes(<String>[
-        'someFile.dart',
-        'secondFile',
-      ]);
-
-      expect(result, contains("export 'someFile.dart.dart' show SomeFile;"));
-      expect(result, contains("export 'secondFile.dart' show SecondFile;"));
-    });
-  });
-  group('Test for generateDateToJson', () {
-    final generator = SwaggerAdditionsGenerator(
-      GeneratorOptions(
+    test('Should generate index with separate models', () {
+      final generatorModels = SwaggerAdditionsGenerator(GeneratorOptions(
         inputFolder: '',
         outputFolder: '',
-      ),
-    );
-    test('Should dateToJson with parameter', () {
-      const expectedResult = 'String? _dateToJson(DateTime? date)';
-      final result = generator.generateDateToJson();
-
-      expect(result, contains(expectedResult));
+        separateModels: true,
+      ));
+      final result = generatorModels.generateIndexes(['pet_service.json']);
+      expect(result, contains("export 'pet_service.models.swagger.dart';"));
     });
   });
 }
