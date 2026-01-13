@@ -89,7 +89,9 @@ Map<String, List<String>> _generateExtensions(GeneratorOptions options) {
     result[url]!.add(join(out, '$name$_outputEnumsFileExtension'));
     result[url]!.add(join(out, '$name$_outputModelsFileExtension'));
     result[url]!.add(join(out, '$name$_outputResponsesFileExtension'));
-    result[url]!.add(join(out, '$name$_outputRetrofitFileExtension'));
+    if (options.generateRetrofit) {
+      result[url]!.add(join(out, '$name$_outputRetrofitFileExtension'));
+    }
     result[url]!.add(join(out, '$name$_outputMetaDataFileExtension'));
   }
 
@@ -109,8 +111,10 @@ Map<String, List<String>> _generateExtensions(GeneratorOptions options) {
         .add(join(out, '$name$_outputModelsFileExtension'));
     result[additionalResultPath]!
         .add(join(out, '$name$_outputResponsesFileExtension'));
-    result[additionalResultPath]!
-        .add(join(out, '$name$_outputRetrofitFileExtension'));
+    if (options.generateRetrofit) {
+      result[additionalResultPath]!
+          .add(join(out, '$name$_outputRetrofitFileExtension'));
+    }
     result[additionalResultPath]!
         .add(join(out, '$name$_outputMetaDataFileExtension'));
   }
@@ -231,21 +235,25 @@ class SwaggerDartCodeGenerator implements Builder {
       options,
     );
 
-    final requests = codeGenerator.generateRequests(
-      contents,
-      getClassNameFromFileName(fileNameWithExtension),
-      removeFileExtension(fileNameWithExtension),
-      options,
-      allEnums,
-    );
+    final requests = options.generateChopper
+        ? codeGenerator.generateRequests(
+            contents,
+            getClassNameFromFileName(fileNameWithExtension),
+            removeFileExtension(fileNameWithExtension),
+            options,
+            allEnums,
+          )
+        : '';
 
-    final retrofitRequests = codeGenerator.generateRetrofitRequests(
-      contents,
-      getClassNameFromFileName(fileNameWithExtension),
-      removeFileExtension(fileNameWithExtension),
-      options,
-      allEnums,
-    );
+    final retrofitRequests = options.generateRetrofit
+        ? codeGenerator.generateRetrofitRequests(
+            contents,
+            getClassNameFromFileName(fileNameWithExtension),
+            removeFileExtension(fileNameWithExtension),
+            options,
+            allEnums,
+          )
+        : '';
 
     final metadata = codeGenerator.generateMetaData(options);
 
@@ -268,7 +276,9 @@ class SwaggerDartCodeGenerator implements Builder {
               options.separateModels ? '' : models,
               customDecoder,
               options.separateModels ? '' : dateToJson));
+    }
 
+    if (options.generateRetrofit && !options.buildOnlyModels) {
       final retrofitAssetId = AssetId(
           buildStep.inputId.package,
           join(options.outputFolder,
@@ -357,11 +367,11 @@ $requests
     final result = """
 $imports
 
-${options.buildOnlyModels ? '' : requests}
+${options.buildOnlyModels || !options.generateChopper ? '' : requests}
 
 $models
 
-${options.buildOnlyModels ? '' : customDecoder}
+${options.buildOnlyModels || !options.generateChopper ? '' : customDecoder}
 
 $dateToJson
 """;
@@ -394,7 +404,9 @@ $dateToJson
       await buildStep.writeAsString(indexAssetId, formatter.format(imports));
     }
 
-    if (options.withConverter && !options.buildOnlyModels) {
+    if (options.withConverter &&
+        !options.buildOnlyModels &&
+        options.generateChopper) {
       final mappingAssetId = AssetId(
           inputId.package, join(options.outputFolder, _mappingFileName));
 

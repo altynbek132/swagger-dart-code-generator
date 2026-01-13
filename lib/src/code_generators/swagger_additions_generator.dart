@@ -23,8 +23,20 @@ class SwaggerAdditionsGenerator extends SwaggerGeneratorBase {
           .replaceAll('.yaml', '.swagger');
       final className = getClassNameFromFileName(actualFileName);
 
-      return 'export \'$fileName.dart\' show $className;';
-    }).toList();
+      final exports = <String>[];
+
+      if (options.generateChopper && !options.buildOnlyModels) {
+        exports.add('export \'$fileName.dart\' show $className;');
+      } else if (options.generateRetrofit && !options.buildOnlyModels) {
+        exports.add('export \'$fileName.retrofit.swagger.dart\' show $className;');
+      }
+
+      if (options.separateModels) {
+        exports.add('export \'$fileName.models.swagger.dart\';');
+      }
+
+      return exports.join('\n');
+    }).where((element) => element.isNotEmpty).toList();
 
     importsList.sort();
 
@@ -48,18 +60,19 @@ final Map<Type, Object Function(Map<String, dynamic>)> $mappingVariableName = {}
     bool buildOnlyModels,
     bool hasEnums,
     bool separateModels,
+    bool generateChopper,
   ) {
     final result = StringBuffer();
 
     final chopperPartImport =
-        buildOnlyModels ? '' : "part '$swaggerFileName.swagger.chopper.dart';";
+        buildOnlyModels || !generateChopper ? '' : "part '$swaggerFileName.swagger.chopper.dart';";
 
     final overridenModels = options.overridenModels
             .any((e) => e.fileName == swaggerFileName)
         ? 'import \'${options.overridenModels.firstWhere((e) => e.fileName == swaggerFileName).importUrl}\';'
         : '';
 
-    final chopperImports = buildOnlyModels
+    final chopperImports = buildOnlyModels || !generateChopper
         ? ''
         : '''import 'package:chopper/chopper.dart';
 

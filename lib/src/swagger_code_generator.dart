@@ -52,7 +52,8 @@ class SwaggerCodeGenerator {
           hasModels,
           buildOnlyModels,
           hasEnums,
-          separateModels);
+          separateModels,
+          options.generateChopper);
 
   List<EnumModel> generateAllEnums({
     required SwaggerRoot root,

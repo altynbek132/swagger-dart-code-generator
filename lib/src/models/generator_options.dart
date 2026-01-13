@@ -42,6 +42,8 @@ class GeneratorOptions {
     this.urlencodedFileType = 'Map<String, String>',
     this.generateFirstSucceedResponse = true,
     this.customAnnotations = const[],
+    this.generateChopper = true,
+    this.generateRetrofit = true,
   });
 
   /// Build options from a JSON map.
@@ -50,6 +52,8 @@ class GeneratorOptions {
 
   final bool usePathForRequestNames;
   final bool generateFirstSucceedResponse;
+  final bool generateChopper;
+  final bool generateRetrofit;
   final bool withBaseUrl;
   final bool addBasePathToRequests;
   final bool includeNullQueryVars;
