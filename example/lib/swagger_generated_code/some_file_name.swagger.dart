@@ -7,8 +7,8 @@ import 'package:json_annotation/json_annotation.dart' as json;
 import 'package:collection/collection.dart';
 import 'dart:convert';
 
-import 'some_file_name.models.swagger.dart';
+import 'some_file_name.freezed.swagger.dart';
 import 'some_file_name.enums.swagger.dart' as enums;
 import 'some_file_name.metadata.swagger.dart';
 export 'some_file_name.enums.swagger.dart';
-export 'some_file_name.models.swagger.dart';
+export 'some_file_name.freezed.swagger.dart';

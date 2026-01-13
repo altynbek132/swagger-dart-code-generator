@@ -28,6 +28,8 @@ abstract class Order with _$Order {
   }) = _Order;
 
   factory Order.fromJson(Map<String, dynamic> json) => _$OrderFromJson(json);
+
+  static const fromJsonFactory = _$OrderFromJson;
 }
 
 @freezed
@@ -39,6 +41,8 @@ abstract class Category with _$Category {
 
   factory Category.fromJson(Map<String, dynamic> json) =>
       _$CategoryFromJson(json);
+
+  static const fromJsonFactory = _$CategoryFromJson;
 }
 
 @freezed
@@ -55,6 +59,8 @@ abstract class User with _$User {
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+
+  static const fromJsonFactory = _$UserFromJson;
 }
 
 @freezed
@@ -65,6 +71,8 @@ abstract class Tag with _$Tag {
   }) = _Tag;
 
   factory Tag.fromJson(Map<String, dynamic> json) => _$TagFromJson(json);
+
+  static const fromJsonFactory = _$TagFromJson;
 }
 
 @freezed
@@ -85,6 +93,8 @@ abstract class Pet with _$Pet {
   }) = _Pet;
 
   factory Pet.fromJson(Map<String, dynamic> json) => _$PetFromJson(json);
+
+  static const fromJsonFactory = _$PetFromJson;
 }
 
 @freezed
@@ -97,6 +107,8 @@ abstract class ApiResponse with _$ApiResponse {
 
   factory ApiResponse.fromJson(Map<String, dynamic> json) =>
       _$ApiResponseFromJson(json);
+
+  static const fromJsonFactory = _$ApiResponseFromJson;
 }
 
 String? orderStatusNullableToJson(enums.OrderStatus? orderStatus) {
