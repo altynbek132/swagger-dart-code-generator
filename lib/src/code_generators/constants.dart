@@ -31,6 +31,13 @@ const kRequired = 'required';
 
 const kChopperService = 'ChopperService';
 const kChopperApi = 'ChopperApi';
+const kRetrofitRestApi = 'RestApi';
+const kRetrofitHeader = 'Header';
+const kRetrofitBody = 'Body';
+const kRetrofitQuery = 'Query';
+const kRetrofitPath = 'Path';
+const kRetrofitField = 'Field';
+const kRetrofitPart = 'Part';
 const kResponse = 'Response';
 const kRequestBody = 'RequestBody';
 const kFutureResponse = 'Future<chopper.Response>';

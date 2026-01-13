@@ -3,6 +3,7 @@ import 'package:swagger_dart_code_generator/src/code_generators/swagger_addition
 import 'package:swagger_dart_code_generator/src/code_generators/swagger_enums_generator.dart';
 import 'package:swagger_dart_code_generator/src/code_generators/swagger_models_generator.dart';
 import 'package:swagger_dart_code_generator/src/code_generators/swagger_requests_generator.dart';
+import 'package:swagger_dart_code_generator/src/code_generators/swagger_retrofit_requests_generator.dart';
 import 'package:swagger_dart_code_generator/src/code_generators/swagger_meta_data_generator.dart';
 import 'package:swagger_dart_code_generator/src/code_generators/v2/swagger_enums_generator_v2.dart';
 import 'package:swagger_dart_code_generator/src/code_generators/v2/swagger_models_generator_v2.dart';
@@ -99,6 +100,20 @@ class SwaggerCodeGenerator {
         allEnums: allEnums,
       );
 
+  String generateRetrofitRequests(
+    SwaggerRoot root,
+    String className,
+    String fileName,
+    GeneratorOptions options,
+    List<EnumModel> allEnums,
+  ) =>
+      _getSwaggerRetrofitRequestsGenerator(root, options).generate(
+        swaggerRoot: root,
+        className: className,
+        fileName: fileName,
+        allEnums: allEnums,
+      );
+
   String generateMetaData(GeneratorOptions options) =>
       _getSwaggerMetaDataGenerator(options).generate();
 
@@ -131,6 +146,12 @@ class SwaggerCodeGenerator {
     GeneratorOptions options,
   ) =>
       SwaggerRequestsGenerator(options);
+
+  SwaggerRetrofitRequestsGenerator _getSwaggerRetrofitRequestsGenerator(
+    SwaggerRoot root,
+    GeneratorOptions options,
+  ) =>
+      SwaggerRetrofitRequestsGenerator(options);
 
   SwaggerMetaDataGenerator _getSwaggerMetaDataGenerator(
     GeneratorOptions options,

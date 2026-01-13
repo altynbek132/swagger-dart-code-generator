@@ -22,6 +22,7 @@ const String _outputFileExtension = '.swagger.dart';
 const String _outputEnumsFileExtension = '.enums.swagger.dart';
 const String _outputModelsFileExtension = '.models.swagger.dart';
 const String _outputResponsesFileExtension = '.responses.swagger.dart';
+const String _outputRetrofitFileExtension = '.retrofit.swagger.dart';
 const String _outputMetaDataFileExtension = '.metadata.swagger.dart';
 const String _indexFileName = 'client_index.dart';
 const String _mappingFileName = 'client_mapping.dart';
@@ -88,6 +89,7 @@ Map<String, List<String>> _generateExtensions(GeneratorOptions options) {
     result[url]!.add(join(out, '$name$_outputEnumsFileExtension'));
     result[url]!.add(join(out, '$name$_outputModelsFileExtension'));
     result[url]!.add(join(out, '$name$_outputResponsesFileExtension'));
+    result[url]!.add(join(out, '$name$_outputRetrofitFileExtension'));
     result[url]!.add(join(out, '$name$_outputMetaDataFileExtension'));
   }
 
@@ -107,6 +109,8 @@ Map<String, List<String>> _generateExtensions(GeneratorOptions options) {
         .add(join(out, '$name$_outputModelsFileExtension'));
     result[additionalResultPath]!
         .add(join(out, '$name$_outputResponsesFileExtension'));
+    result[additionalResultPath]!
+        .add(join(out, '$name$_outputRetrofitFileExtension'));
     result[additionalResultPath]!
         .add(join(out, '$name$_outputMetaDataFileExtension'));
   }
@@ -235,6 +239,14 @@ class SwaggerDartCodeGenerator implements Builder {
       allEnums,
     );
 
+    final retrofitRequests = codeGenerator.generateRetrofitRequests(
+      contents,
+      getClassNameFromFileName(fileNameWithExtension),
+      removeFileExtension(fileNameWithExtension),
+      options,
+      allEnums,
+    );
+
     final metadata = codeGenerator.generateMetaData(options);
 
     final customDecoder = codeGenerator.generateCustomJsonConverter(
@@ -256,6 +268,19 @@ class SwaggerDartCodeGenerator implements Builder {
               options.separateModels ? '' : models,
               customDecoder,
               options.separateModels ? '' : dateToJson));
+
+      final retrofitAssetId = AssetId(
+          buildStep.inputId.package,
+          join(options.outputFolder,
+              '$fileNameWithoutExtension$_outputRetrofitFileExtension'));
+
+      await buildStep.writeAsString(
+          retrofitAssetId,
+          _generateRetrofitFileContent(
+            retrofitRequests,
+            fileNameWithoutExtension,
+            enums.isNotEmpty,
+          ));
     }
 
     if (enums.isNotEmpty) {
@@ -295,6 +320,36 @@ class SwaggerDartCodeGenerator implements Builder {
         join(options.outputFolder,
             '$fileNameWithoutExtension$_outputMetaDataFileExtension'));
     await buildStep.writeAsString(metadataAssetId, formattedMetadata);
+  }
+
+  String _generateRetrofitFileContent(
+    String requests,
+    String fileNameWithoutExtension,
+    bool hasEnums,
+  ) {
+    final enumsImport = hasEnums
+        ? "import '$fileNameWithoutExtension.enums.swagger.dart' as enums;"
+        : '';
+
+    final result = """
+// coverage:ignore-file
+// ignore_for_file: type=lint
+
+import 'package:dio/dio.dart';
+import 'package:retrofit/retrofit.dart';
+import 'package:retrofit/http.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:collection/collection.dart';
+import 'dart:async';
+
+$enumsImport
+
+part '$fileNameWithoutExtension.retrofit.swagger.g.dart';
+
+$requests
+""";
+
+    return _tryFormatCode(result);
   }
 
   String _generateFileContent(String imports, String requests, String models,
