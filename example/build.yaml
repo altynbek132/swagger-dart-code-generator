@@ -14,6 +14,8 @@ targets:
 
       swagger_dart_code_generator:
         options:
+          generate_chopper: false
+          # generate_retrofit: true
           input_folder: "input_folder/"
           output_folder: "lib/swagger_generated_code/"
           with_base_url: true
