@@ -4,7 +4,6 @@ import 'package:swagger_dart_code_generator/src/code_generators/swagger_generato
 import 'package:swagger_dart_code_generator/src/code_generators/swagger_requests_generator.dart';
 import 'package:swagger_dart_code_generator/src/models/generator_options.dart';
 import 'package:swagger_dart_code_generator/src/swagger_models/requests/swagger_request.dart';
-import 'package:swagger_dart_code_generator/src/swagger_models/requests/swagger_request_parameter.dart';
 import 'package:swagger_dart_code_generator/src/swagger_models/swagger_path.dart';
 import 'package:swagger_dart_code_generator/src/swagger_models/swagger_root.dart';
 import 'constants.dart';
@@ -23,29 +22,64 @@ class SwaggerRetrofitRequestsGenerator extends SwaggerGeneratorBase {
     required String fileName,
     required List<EnumModel> allEnums,
   }) {
-    final service = _generateService(swaggerRoot, allEnums, className, fileName);
+    final service = _generateService(
+      swaggerRoot,
+      allEnums,
+      className,
+      fileName,
+    );
 
     return service.accept(DartEmitter()).toString();
   }
 
-  Class _generateService(SwaggerRoot swaggerRoot, List<EnumModel> allEnums, String className, String fileName) {
+  Class _generateService(
+    SwaggerRoot swaggerRoot,
+    List<EnumModel> allEnums,
+    String className,
+    String fileName,
+  ) {
     final methods = <Method>[];
     final chopperGenerator = SwaggerRequestsGenerator(options);
 
     swaggerRoot.paths.forEach((String path, SwaggerPath swaggerPath) {
-      swaggerPath.requests.forEach((String requestType, SwaggerRequest swaggerRequest) {
+      swaggerPath.requests.forEach((
+        String requestType,
+        SwaggerRequest swaggerRequest,
+      ) {
         if (requestType.toLowerCase() == kRequestTypeOptions) return;
-        if (options.excludePaths.any((excludePath) => RegExp(excludePath).hasMatch(path))) return;
-        if (options.includePaths.isNotEmpty &&
-            !options.includePaths.any((includePath) => RegExp(includePath).hasMatch(path)))
+        if (options.excludePaths.any(
+          (excludePath) => RegExp(excludePath).hasMatch(path),
+        ))
           return;
+        if (options.includePaths.isNotEmpty &&
+            !options.includePaths.any(
+              (includePath) => RegExp(includePath).hasMatch(path),
+            )) {
+          return;
+        }
 
-        final methodName = chopperGenerator.generateRequestName(path, requestType);
+        final methodName = chopperGenerator.generateRequestName(
+          path,
+          requestType,
+        );
 
-        // Используем рефлексию или доступ к приватным методам здесь невозможно без изменений в базовом классе.
-        // Поэтому мы будем использовать упрощенную логику генерации параметров для Retrofit.
+        final returnTypeName = chopperGenerator.getReturnTypeName(
+          responses: swaggerRequest.responses,
+          path: path,
+          methodName: methodName,
+          method: requestType,
+          modelPostfix: options.modelPostfix,
+          swaggerRoot: swaggerRoot,
+          overridenResponses: Map.fromEntries(
+            options.responseOverrideValueMap
+                .where((v) => v.method.isEmpty || v.method == requestType)
+                .map((v) => MapEntry(v.url, v)),
+          ),
+        );
 
-        final returns = 'Future<dynamic>'; // В идеале нужно вычислять тип
+        final returns = returnTypeName.isEmpty
+            ? 'Future<dynamic>'
+            : 'Future<$returnTypeName>';
 
         var annotationPath = path;
         if (options.addBasePathToRequests) {
@@ -57,7 +91,11 @@ class SwaggerRetrofitRequestsGenerator extends SwaggerGeneratorBase {
             (m) => m
               ..name = methodName
               ..returns = Reference(returns)
-              ..annotations.add(refer(requestType.toUpperCase()).call([literalString(annotationPath)]))
+              ..annotations.add(
+                refer(
+                  requestType.toUpperCase(),
+                ).call([literalString(annotationPath)]),
+              )
               ..docs.add('/// ${swaggerRequest.summary}'),
           ),
         );
