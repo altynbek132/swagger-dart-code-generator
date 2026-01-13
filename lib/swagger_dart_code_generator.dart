@@ -88,8 +88,11 @@ Map<String, List<String>> _generateExtensions(GeneratorOptions options) {
     result[url] = {};
     result[url]!.add(join(out, '$name$_outputFileExtension'));
     result[url]!.add(join(out, '$name$_outputEnumsFileExtension'));
-    result[url]!.add(join(out, '$name$_outputModelsFileExtension'));
-    result[url]!.add(join(out, '$name$_outputFreezedModelsFileExtension'));
+    if (options.useFreezed) {
+      result[url]!.add(join(out, '$name$_outputFreezedModelsFileExtension'));
+    } else {
+      result[url]!.add(join(out, '$name$_outputModelsFileExtension'));
+    }
     result[url]!.add(join(out, '$name$_outputResponsesFileExtension'));
     if (options.generateRetrofit) {
       result[url]!.add(join(out, '$name$_outputRetrofitFileExtension'));
@@ -109,10 +112,13 @@ Map<String, List<String>> _generateExtensions(GeneratorOptions options) {
     result[additionalResultPath]!.add(join(out, '$name$_outputFileExtension'));
     result[additionalResultPath]!
         .add(join(out, '$name$_outputEnumsFileExtension'));
-    result[additionalResultPath]!
-        .add(join(out, '$name$_outputModelsFileExtension'));
-    result[additionalResultPath]!
-        .add(join(out, '$name$_outputFreezedModelsFileExtension'));
+    if (options.useFreezed) {
+      result[additionalResultPath]!
+          .add(join(out, '$name$_outputFreezedModelsFileExtension'));
+    } else {
+      result[additionalResultPath]!
+          .add(join(out, '$name$_outputModelsFileExtension'));
+    }
     result[additionalResultPath]!
         .add(join(out, '$name$_outputResponsesFileExtension'));
     if (options.generateRetrofit) {
@@ -216,20 +222,24 @@ class SwaggerDartCodeGenerator implements Builder {
       options: options,
     );
 
-    final models = codeGenerator.generateModels(
-      contents,
-      fileWithoutExtension,
-      options,
-      allEnums,
-    );
+    final models = options.useFreezed
+        ? ''
+        : codeGenerator.generateModels(
+            contents,
+            fileWithoutExtension,
+            options,
+            allEnums,
+          );
 
-    final freezedModels = codeGenerator.generateModels(
-      contents,
-      fileWithoutExtension,
-      options,
-      allEnums,
-      generateFreezed: true,
-    );
+    final freezedModels = options.useFreezed
+        ? codeGenerator.generateModels(
+            contents,
+            fileWithoutExtension,
+            options,
+            allEnums,
+            generateFreezed: true,
+          )
+        : '';
 
     final enums = codeGenerator.generateEnums(
       contents,
@@ -238,9 +248,12 @@ class SwaggerDartCodeGenerator implements Builder {
       options,
     );
 
+    final hasModels = models.contains('@JsonSerializable') ||
+        freezedModels.contains('@freezed');
+
     final imports = codeGenerator.generateImportsContent(
       fileNameWithoutExtension,
-      models.contains('@JsonSerializable'),
+      hasModels,
       options.buildOnlyModels,
       enums.isNotEmpty,
       options.separateModels,
@@ -317,7 +330,7 @@ class SwaggerDartCodeGenerator implements Builder {
       await buildStep.writeAsString(enumsAssetId, formatterEnums);
     }
 
-    if (options.separateModels) {
+    if (options.separateModels && !options.useFreezed && models.isNotEmpty) {
       ///Write models to separate file
       final formattedModels = _tryFormatCode(_generateSeparateModelsFileContent(
         models,

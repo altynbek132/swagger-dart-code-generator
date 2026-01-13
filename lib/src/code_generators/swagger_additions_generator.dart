@@ -33,7 +33,10 @@ class SwaggerAdditionsGenerator extends SwaggerGeneratorBase {
             'export \'$fileNameWithoutExtension.retrofit.swagger.dart\' show $className;');
       }
 
-      if (options.separateModels) {
+      if (options.useFreezed) {
+        exports
+            .add('export \'$fileNameWithoutExtension.freezed.swagger.dart\';');
+      } else if (options.separateModels) {
         exports.add('export \'$fileNameWithoutExtension.models.swagger.dart\';');
       }
 
@@ -66,8 +69,9 @@ final Map<Type, Object Function(Map<String, dynamic>)> $mappingVariableName = {}
   ) {
     final result = StringBuffer();
 
-    final chopperPartImport =
-        buildOnlyModels || !generateChopper ? '' : "part '$swaggerFileName.swagger.chopper.dart';";
+    final chopperPartImport = buildOnlyModels || !generateChopper
+        ? ''
+        : "part '$swaggerFileName.swagger.chopper.dart';";
 
     final overridenModels = options.overridenModels
             .any((e) => e.fileName == swaggerFileName)
@@ -102,8 +106,12 @@ import 'package:collection/collection.dart';
 ${options.overrideToString ? "import 'dart:convert';" : ''}
 """);
 
-    if (hasModels && separateModels) {
-      result.write("import '$swaggerFileName.models.swagger.dart';");
+    if (hasModels) {
+      if (options.useFreezed) {
+        result.write("import '$swaggerFileName.freezed.swagger.dart';");
+      } else if (separateModels) {
+        result.write("import '$swaggerFileName.models.swagger.dart';");
+      }
     }
 
     result.write(overridenModels);
@@ -128,8 +136,12 @@ ${options.overrideToString ? "import 'dart:convert';" : ''}
       result.write(enumsExport);
     }
 
-    if (hasModels && separateModels) {
-      result.write("export '$swaggerFileName.models.swagger.dart';");
+    if (hasModels) {
+      if (options.useFreezed) {
+        result.write("export '$swaggerFileName.freezed.swagger.dart';");
+      } else if (separateModels) {
+        result.write("export '$swaggerFileName.models.swagger.dart';");
+      }
     }
 
     result.write('\n\n');
@@ -137,7 +149,7 @@ ${options.overrideToString ? "import 'dart:convert';" : ''}
     if (chopperPartImport.isNotEmpty) {
       result.write(chopperPartImport);
     }
-    if (hasModels && !separateModels) {
+    if (hasModels && !separateModels && !options.useFreezed) {
       result.write("part '$swaggerFileName.swagger.g.dart';");
     }
 

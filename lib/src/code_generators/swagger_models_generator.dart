@@ -1994,6 +1994,8 @@ $generatedProperties
   
   $fromJson
 
+  static const fromJsonFactory = _\$${validatedClassName}FromJson;
+
   ${staticMethods.join('\n')}
 }
 ''';
