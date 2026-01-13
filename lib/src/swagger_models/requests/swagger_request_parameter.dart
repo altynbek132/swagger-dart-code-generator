@@ -67,6 +67,5 @@ class SwaggerRequestParameter {
 
   Map<String, dynamic> toJson() => _$SwaggerRequestParameterToJson(this);
 
-  factory SwaggerRequestParameter.fromJson(Map<String, dynamic> json) =>
-      _$SwaggerRequestParameterFromJson(json);
+  factory SwaggerRequestParameter.fromJson(Map<String, dynamic> json) => _$SwaggerRequestParameterFromJson(json);
 }

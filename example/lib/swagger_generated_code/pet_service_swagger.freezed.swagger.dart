@@ -18,11 +18,7 @@ abstract class Order with _$Order {
     @JsonKey(name: 'petId') int? petId,
     @JsonKey(name: 'quantity') int? quantity,
     @JsonKey(name: 'shipDate') DateTime? shipDate,
-    @JsonKey(
-      name: 'status',
-      toJson: orderStatusNullableToJson,
-      fromJson: orderStatusNullableFromJson,
-    )
+    @JsonKey(name: 'status', toJson: orderStatusNullableToJson, fromJson: orderStatusNullableFromJson)
     enums.OrderStatus? status,
     @JsonKey(name: 'complete', defaultValue: false) bool? complete,
   }) = _Order;
@@ -34,13 +30,9 @@ abstract class Order with _$Order {
 
 @freezed
 abstract class Category with _$Category {
-  const factory Category({
-    @JsonKey(name: 'id') int? id,
-    @JsonKey(name: 'name') String? name,
-  }) = _Category;
+  const factory Category({@JsonKey(name: 'id') int? id, @JsonKey(name: 'name') String? name}) = _Category;
 
-  factory Category.fromJson(Map<String, dynamic> json) =>
-      _$CategoryFromJson(json);
+  factory Category.fromJson(Map<String, dynamic> json) => _$CategoryFromJson(json);
 
   static const fromJsonFactory = _$CategoryFromJson;
 }
@@ -65,10 +57,7 @@ abstract class User with _$User {
 
 @freezed
 abstract class Tag with _$Tag {
-  const factory Tag({
-    @JsonKey(name: 'id') int? id,
-    @JsonKey(name: 'name') String? name,
-  }) = _Tag;
+  const factory Tag({@JsonKey(name: 'id') int? id, @JsonKey(name: 'name') String? name}) = _Tag;
 
   factory Tag.fromJson(Map<String, dynamic> json) => _$TagFromJson(json);
 
@@ -81,14 +70,9 @@ abstract class Pet with _$Pet {
     @JsonKey(name: 'id') int? id,
     @JsonKey(name: 'category') Category? category,
     @JsonKey(name: 'name') required String name,
-    @JsonKey(name: 'photoUrls', defaultValue: <String>[])
-    required List<String> photoUrls,
+    @JsonKey(name: 'photoUrls', defaultValue: <String>[]) required List<String> photoUrls,
     @JsonKey(name: 'tags', defaultValue: <Tag>[]) List<Tag>? tags,
-    @JsonKey(
-      name: 'status',
-      toJson: petStatusNullableToJson,
-      fromJson: petStatusNullableFromJson,
-    )
+    @JsonKey(name: 'status', toJson: petStatusNullableToJson, fromJson: petStatusNullableFromJson)
     enums.PetStatus? status,
   }) = _Pet;
 
@@ -105,8 +89,7 @@ abstract class ApiResponse with _$ApiResponse {
     @JsonKey(name: 'message') String? message,
   }) = _ApiResponse;
 
-  factory ApiResponse.fromJson(Map<String, dynamic> json) =>
-      _$ApiResponseFromJson(json);
+  factory ApiResponse.fromJson(Map<String, dynamic> json) => _$ApiResponseFromJson(json);
 
   static const fromJsonFactory = _$ApiResponseFromJson;
 }
@@ -119,28 +102,17 @@ String? orderStatusToJson(enums.OrderStatus orderStatus) {
   return orderStatus.value;
 }
 
-enums.OrderStatus orderStatusFromJson(
-  Object? orderStatus, [
-  enums.OrderStatus? defaultValue,
-]) {
-  return enums.OrderStatus.values.firstWhereOrNull(
-        (e) => e.value == orderStatus,
-      ) ??
+enums.OrderStatus orderStatusFromJson(Object? orderStatus, [enums.OrderStatus? defaultValue]) {
+  return enums.OrderStatus.values.firstWhereOrNull((e) => e.value == orderStatus) ??
       defaultValue ??
       enums.OrderStatus.swaggerGeneratedUnknown;
 }
 
-enums.OrderStatus? orderStatusNullableFromJson(
-  Object? orderStatus, [
-  enums.OrderStatus? defaultValue,
-]) {
+enums.OrderStatus? orderStatusNullableFromJson(Object? orderStatus, [enums.OrderStatus? defaultValue]) {
   if (orderStatus == null) {
     return null;
   }
-  return enums.OrderStatus.values.firstWhereOrNull(
-        (e) => e.value == orderStatus,
-      ) ??
-      defaultValue;
+  return enums.OrderStatus.values.firstWhereOrNull((e) => e.value == orderStatus) ?? defaultValue;
 }
 
 String orderStatusExplodedListToJson(List<enums.OrderStatus>? orderStatus) {
@@ -155,10 +127,7 @@ List<String> orderStatusListToJson(List<enums.OrderStatus>? orderStatus) {
   return orderStatus.map((e) => e.value!).toList();
 }
 
-List<enums.OrderStatus> orderStatusListFromJson(
-  List? orderStatus, [
-  List<enums.OrderStatus>? defaultValue,
-]) {
+List<enums.OrderStatus> orderStatusListFromJson(List? orderStatus, [List<enums.OrderStatus>? defaultValue]) {
   if (orderStatus == null) {
     return defaultValue ?? [];
   }
@@ -166,10 +135,7 @@ List<enums.OrderStatus> orderStatusListFromJson(
   return orderStatus.map((e) => orderStatusFromJson(e.toString())).toList();
 }
 
-List<enums.OrderStatus>? orderStatusNullableListFromJson(
-  List? orderStatus, [
-  List<enums.OrderStatus>? defaultValue,
-]) {
+List<enums.OrderStatus>? orderStatusNullableListFromJson(List? orderStatus, [List<enums.OrderStatus>? defaultValue]) {
   if (orderStatus == null) {
     return defaultValue;
   }
@@ -185,24 +151,17 @@ String? petStatusToJson(enums.PetStatus petStatus) {
   return petStatus.value;
 }
 
-enums.PetStatus petStatusFromJson(
-  Object? petStatus, [
-  enums.PetStatus? defaultValue,
-]) {
+enums.PetStatus petStatusFromJson(Object? petStatus, [enums.PetStatus? defaultValue]) {
   return enums.PetStatus.values.firstWhereOrNull((e) => e.value == petStatus) ??
       defaultValue ??
       enums.PetStatus.swaggerGeneratedUnknown;
 }
 
-enums.PetStatus? petStatusNullableFromJson(
-  Object? petStatus, [
-  enums.PetStatus? defaultValue,
-]) {
+enums.PetStatus? petStatusNullableFromJson(Object? petStatus, [enums.PetStatus? defaultValue]) {
   if (petStatus == null) {
     return null;
   }
-  return enums.PetStatus.values.firstWhereOrNull((e) => e.value == petStatus) ??
-      defaultValue;
+  return enums.PetStatus.values.firstWhereOrNull((e) => e.value == petStatus) ?? defaultValue;
 }
 
 String petStatusExplodedListToJson(List<enums.PetStatus>? petStatus) {
@@ -217,10 +176,7 @@ List<String> petStatusListToJson(List<enums.PetStatus>? petStatus) {
   return petStatus.map((e) => e.value!).toList();
 }
 
-List<enums.PetStatus> petStatusListFromJson(
-  List? petStatus, [
-  List<enums.PetStatus>? defaultValue,
-]) {
+List<enums.PetStatus> petStatusListFromJson(List? petStatus, [List<enums.PetStatus>? defaultValue]) {
   if (petStatus == null) {
     return defaultValue ?? [];
   }
@@ -228,10 +184,7 @@ List<enums.PetStatus> petStatusListFromJson(
   return petStatus.map((e) => petStatusFromJson(e.toString())).toList();
 }
 
-List<enums.PetStatus>? petStatusNullableListFromJson(
-  List? petStatus, [
-  List<enums.PetStatus>? defaultValue,
-]) {
+List<enums.PetStatus>? petStatusNullableListFromJson(List? petStatus, [List<enums.PetStatus>? defaultValue]) {
   if (petStatus == null) {
     return defaultValue;
   }
@@ -239,15 +192,11 @@ List<enums.PetStatus>? petStatusNullableListFromJson(
   return petStatus.map((e) => petStatusFromJson(e.toString())).toList();
 }
 
-String? petFindByStatusGetStatusNullableToJson(
-  enums.PetFindByStatusGetStatus? petFindByStatusGetStatus,
-) {
+String? petFindByStatusGetStatusNullableToJson(enums.PetFindByStatusGetStatus? petFindByStatusGetStatus) {
   return petFindByStatusGetStatus?.value;
 }
 
-String? petFindByStatusGetStatusToJson(
-  enums.PetFindByStatusGetStatus petFindByStatusGetStatus,
-) {
+String? petFindByStatusGetStatusToJson(enums.PetFindByStatusGetStatus petFindByStatusGetStatus) {
   return petFindByStatusGetStatus.value;
 }
 
@@ -255,9 +204,7 @@ enums.PetFindByStatusGetStatus petFindByStatusGetStatusFromJson(
   Object? petFindByStatusGetStatus, [
   enums.PetFindByStatusGetStatus? defaultValue,
 ]) {
-  return enums.PetFindByStatusGetStatus.values.firstWhereOrNull(
-        (e) => e.value == petFindByStatusGetStatus,
-      ) ??
+  return enums.PetFindByStatusGetStatus.values.firstWhereOrNull((e) => e.value == petFindByStatusGetStatus) ??
       defaultValue ??
       enums.PetFindByStatusGetStatus.swaggerGeneratedUnknown;
 }
@@ -269,21 +216,15 @@ enums.PetFindByStatusGetStatus? petFindByStatusGetStatusNullableFromJson(
   if (petFindByStatusGetStatus == null) {
     return null;
   }
-  return enums.PetFindByStatusGetStatus.values.firstWhereOrNull(
-        (e) => e.value == petFindByStatusGetStatus,
-      ) ??
+  return enums.PetFindByStatusGetStatus.values.firstWhereOrNull((e) => e.value == petFindByStatusGetStatus) ??
       defaultValue;
 }
 
-String petFindByStatusGetStatusExplodedListToJson(
-  List<enums.PetFindByStatusGetStatus>? petFindByStatusGetStatus,
-) {
+String petFindByStatusGetStatusExplodedListToJson(List<enums.PetFindByStatusGetStatus>? petFindByStatusGetStatus) {
   return petFindByStatusGetStatus?.map((e) => e.value!).join(',') ?? '';
 }
 
-List<String> petFindByStatusGetStatusListToJson(
-  List<enums.PetFindByStatusGetStatus>? petFindByStatusGetStatus,
-) {
+List<String> petFindByStatusGetStatusListToJson(List<enums.PetFindByStatusGetStatus>? petFindByStatusGetStatus) {
   if (petFindByStatusGetStatus == null) {
     return [];
   }
@@ -299,13 +240,10 @@ List<enums.PetFindByStatusGetStatus> petFindByStatusGetStatusListFromJson(
     return defaultValue ?? [];
   }
 
-  return petFindByStatusGetStatus
-      .map((e) => petFindByStatusGetStatusFromJson(e.toString()))
-      .toList();
+  return petFindByStatusGetStatus.map((e) => petFindByStatusGetStatusFromJson(e.toString())).toList();
 }
 
-List<enums.PetFindByStatusGetStatus>?
-petFindByStatusGetStatusNullableListFromJson(
+List<enums.PetFindByStatusGetStatus>? petFindByStatusGetStatusNullableListFromJson(
   List? petFindByStatusGetStatus, [
   List<enums.PetFindByStatusGetStatus>? defaultValue,
 ]) {
@@ -313,7 +251,5 @@ petFindByStatusGetStatusNullableListFromJson(
     return defaultValue;
   }
 
-  return petFindByStatusGetStatus
-      .map((e) => petFindByStatusGetStatusFromJson(e.toString()))
-      .toList();
+  return petFindByStatusGetStatus.map((e) => petFindByStatusGetStatusFromJson(e.toString())).toList();
 }

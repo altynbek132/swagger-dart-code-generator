@@ -28,12 +28,7 @@ class SwaggerRetrofitRequestsGenerator extends SwaggerGeneratorBase {
     return service.accept(DartEmitter()).toString();
   }
 
-  Class _generateService(
-    SwaggerRoot swaggerRoot,
-    List<EnumModel> allEnums,
-    String className,
-    String fileName,
-  ) {
+  Class _generateService(SwaggerRoot swaggerRoot, List<EnumModel> allEnums, String className, String fileName) {
     final methods = <Method>[];
     final chopperGenerator = SwaggerRequestsGenerator(options);
 
@@ -41,13 +36,15 @@ class SwaggerRetrofitRequestsGenerator extends SwaggerGeneratorBase {
       swaggerPath.requests.forEach((String requestType, SwaggerRequest swaggerRequest) {
         if (requestType.toLowerCase() == kRequestTypeOptions) return;
         if (options.excludePaths.any((excludePath) => RegExp(excludePath).hasMatch(path))) return;
-        if (options.includePaths.isNotEmpty && !options.includePaths.any((includePath) => RegExp(includePath).hasMatch(path))) return;
+        if (options.includePaths.isNotEmpty &&
+            !options.includePaths.any((includePath) => RegExp(includePath).hasMatch(path)))
+          return;
 
         final methodName = chopperGenerator.generateRequestName(path, requestType);
 
         // Используем рефлексию или доступ к приватным методам здесь невозможно без изменений в базовом классе.
         // Поэтому мы будем использовать упрощенную логику генерации параметров для Retrofit.
-        
+
         final returns = 'Future<dynamic>'; // В идеале нужно вычислять тип
 
         var annotationPath = path;
@@ -55,15 +52,15 @@ class SwaggerRetrofitRequestsGenerator extends SwaggerGeneratorBase {
           annotationPath = '${swaggerRoot.basePath}$path';
         }
 
-        methods.add(Method(
-          (m) => m
-            ..name = methodName
-            ..returns = Reference(returns)
-            ..annotations.add(
-              refer(requestType.toUpperCase()).call([literalString(annotationPath)]),
-            )
-            ..docs.add('/// ${swaggerRequest.summary}')
-        ));
+        methods.add(
+          Method(
+            (m) => m
+              ..name = methodName
+              ..returns = Reference(returns)
+              ..annotations.add(refer(requestType.toUpperCase()).call([literalString(annotationPath)]))
+              ..docs.add('/// ${swaggerRequest.summary}'),
+          ),
+        );
       });
     });
 
@@ -72,16 +69,28 @@ class SwaggerRetrofitRequestsGenerator extends SwaggerGeneratorBase {
         ..name = className
         ..annotations.add(refer(kRetrofitRestApi).call([]))
         ..abstract = true
-        ..constructors.add(Constructor((con) => con
-          ..factory = true
-          ..requiredParameters.add(Parameter((p) => p
-            ..name = 'dio'
-            ..type = Reference('Dio')))
-          ..optionalParameters.add(Parameter((p) => p
-            ..name = 'baseUrl'
-            ..named = true
-            ..type = Reference('String?')))
-          ..redirect = Reference('_${className}')))
+        ..constructors.add(
+          Constructor(
+            (con) => con
+              ..factory = true
+              ..requiredParameters.add(
+                Parameter(
+                  (p) => p
+                    ..name = 'dio'
+                    ..type = Reference('Dio'),
+                ),
+              )
+              ..optionalParameters.add(
+                Parameter(
+                  (p) => p
+                    ..name = 'baseUrl'
+                    ..named = true
+                    ..type = Reference('String?'),
+                ),
+              )
+              ..redirect = Reference('_${className}'),
+          ),
+        )
         ..methods.addAll(methods),
     );
   }

@@ -1,21 +1,16 @@
 import 'package:code_builder/code_builder.dart';
 
 extension ParameterExtension on Parameter {
-  Parameter copyWith({
-    Reference? type,
-    List<Expression>? annotations,
-    String? name,
-  }) =>
-      Parameter(
-        (p) => p
-          ..name = name ?? this.name
-          ..named = named
-          ..required = required
-          ..type = type ?? this.type
-          ..named = named
-          ..defaultTo = defaultTo
-          ..annotations.addAll(annotations ?? this.annotations),
-      );
+  Parameter copyWith({Reference? type, List<Expression>? annotations, String? name}) => Parameter(
+    (p) => p
+      ..name = name ?? this.name
+      ..named = named
+      ..required = required
+      ..type = type ?? this.type
+      ..named = named
+      ..defaultTo = defaultTo
+      ..annotations.addAll(annotations ?? this.annotations),
+  );
 }
 
 extension ParameterListExtension on List<Parameter> {

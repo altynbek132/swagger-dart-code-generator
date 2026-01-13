@@ -38,9 +38,7 @@ abstract class SwaggerGeneratorBase {
     final words = className.split('\$');
 
     final result = words
-        .map(
-          (e) => e.pascalCase.split(RegExp(r'\W+|\_')).map((String str) => str.capitalize).join(),
-        )
+        .map((e) => e.pascalCase.split(RegExp(r'\W+|\_')).map((String str) => str.capitalize).join())
         .join('\$')
         .replaceFirst(RegExp(options.cutFromModelNames), '');
 
@@ -73,8 +71,7 @@ abstract class SwaggerGeneratorBase {
 
     final correctedPath = generateFieldName(path);
 
-    final result =
-        '${correctedPath.capitalize}${requestType.capitalize}${parameterName.capitalize}';
+    final result = '${correctedPath.capitalize}${requestType.capitalize}${parameterName.capitalize}';
 
     return getValidatedClassName(result);
   }
@@ -134,9 +131,7 @@ abstract class SwaggerGeneratorBase {
           }
 
           final enumValues =
-              swaggerRequestParameter.schema?.enumValues ??
-              swaggerRequestParameter.items?.enumValues ??
-              [];
+              swaggerRequestParameter.schema?.enumValues ?? swaggerRequestParameter.items?.enumValues ?? [];
 
           if (enumValues.isNotEmpty) {
             enums.add(

@@ -88,10 +88,7 @@ class SwaggerSchema {
   MsEnum? msEnum;
 
   List<String> get enumValues {
-    final values = (msEnum?.values.isNotEmpty == true
-            ? msEnum?.values.map((e) => e.value)
-            : enumValuesObj) ??
-        [];
+    final values = (msEnum?.values.isNotEmpty == true ? msEnum?.values.map((e) => e.value) : enumValuesObj) ?? [];
 
     return values.map((e) => e.toString()).toList();
   }
@@ -113,10 +110,7 @@ class SwaggerSchema {
   bool? isNullable;
 
   bool get shouldBeNullable =>
-      isNullable == true ||
-      readOnly ||
-      writeOnly ||
-      (_type is List && (_type as List).contains('null'));
+      isNullable == true || readOnly || writeOnly || (_type is List && (_type as List).contains('null'));
 
   @JsonKey(name: 'schema')
   SwaggerSchema? schema;
@@ -134,18 +128,12 @@ class SwaggerSchema {
 
   List<String>? enumNames;
 
-  factory SwaggerSchema.fromJson(Map<String, dynamic> json) =>
-      _$SwaggerSchemaFromJson(json)
-        ..rawJson = json
-        ..enumNames = ((json[kEnumNames] ?? json[kEnumVarnames]) as List?)
-            ?.map((e) => e as String)
-            .toList()
-        ..isNullable = (json[kIsNullable] ?? json[kNullable] ?? false) as bool;
+  factory SwaggerSchema.fromJson(Map<String, dynamic> json) => _$SwaggerSchemaFromJson(json)
+    ..rawJson = json
+    ..enumNames = ((json[kEnumNames] ?? json[kEnumVarnames]) as List?)?.map((e) => e as String).toList()
+    ..isNullable = (json[kIsNullable] ?? json[kNullable] ?? false) as bool;
 
-  Map<String, dynamic> toJson() => {
-        ..._$SwaggerSchemaToJson(this),
-        if (enumNames != null) kEnumNames: enumNames,
-      };
+  Map<String, dynamic> toJson() => {..._$SwaggerSchemaToJson(this), if (enumNames != null) kEnumNames: enumNames};
 }
 
 bool _additionalsFromJson(dynamic value) => value != false;
@@ -163,9 +151,7 @@ class MsEnum {
   @JsonKey(name: 'values')
   final List<MsEnumValue> values;
 
-  const MsEnum({
-    this.values = const [],
-  });
+  const MsEnum({this.values = const []});
 
   Map<String, dynamic> toJson() => _$MsEnumToJson(this);
 
@@ -181,6 +167,5 @@ class MsEnumValue {
 
   Map<String, dynamic> toJson() => _$MsEnumValueToJson(this);
 
-  factory MsEnumValue.fromJson(Map<String, dynamic> json) =>
-      _$MsEnumValueFromJson(json);
+  factory MsEnumValue.fromJson(Map<String, dynamic> json) => _$MsEnumValueFromJson(json);
 }

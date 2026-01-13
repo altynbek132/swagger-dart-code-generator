@@ -48,8 +48,7 @@ class GeneratorOptions {
   });
 
   /// Build options from a JSON map.
-  factory GeneratorOptions.fromJson(Map<String, dynamic> json) =>
-      _$GeneratorOptionsFromJson(json);
+  factory GeneratorOptions.fromJson(Map<String, dynamic> json) => _$GeneratorOptionsFromJson(json);
 
   final bool usePathForRequestNames;
   final bool generateFirstSucceedResponse;
@@ -92,6 +91,7 @@ class GeneratorOptions {
 
   @JsonKey(defaultValue: <CustomAnnotationMap>[])
   final List<CustomAnnotationMap> customAnnotations;
+
   /// Convert this options instance to JSON.
   Map<String, dynamic> toJson() => _$GeneratorOptionsToJson(this);
 }
@@ -101,8 +101,7 @@ class DefaultValueMap {
   DefaultValueMap({required this.typeName, required this.defaultValue});
 
   /// Build a default value map from a JSON map.
-  factory DefaultValueMap.fromJson(Map<String, dynamic> json) =>
-      _$DefaultValueMapFromJson(json);
+  factory DefaultValueMap.fromJson(Map<String, dynamic> json) => _$DefaultValueMapFromJson(json);
 
   @JsonKey(defaultValue: '')
   final String typeName;
@@ -116,12 +115,10 @@ class DefaultValueMap {
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class ResponseOverrideValueMap {
-  ResponseOverrideValueMap(
-      {required this.url, required this.method, required this.overriddenValue});
+  ResponseOverrideValueMap({required this.url, required this.method, required this.overriddenValue});
 
   /// Build a default value map from a JSON map.
-  factory ResponseOverrideValueMap.fromJson(Map<String, dynamic> json) =>
-      _$ResponseOverrideValueMapFromJson(json);
+  factory ResponseOverrideValueMap.fromJson(Map<String, dynamic> json) => _$ResponseOverrideValueMapFromJson(json);
 
   @JsonKey(defaultValue: '')
   final String url;
@@ -148,16 +145,12 @@ class DefaultHeaderValueMap {
 
   Map<String, dynamic> toJson() => _$DefaultHeaderValueMapToJson(this);
 
-  factory DefaultHeaderValueMap.fromJson(Map<String, dynamic> json) =>
-      _$DefaultHeaderValueMapFromJson(json);
+  factory DefaultHeaderValueMap.fromJson(Map<String, dynamic> json) => _$DefaultHeaderValueMapFromJson(json);
 }
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class InputUrl {
-  InputUrl({
-    required this.url,
-    this.fileName,
-  });
+  InputUrl({required this.url, this.fileName});
 
   @JsonKey()
   final String url;
@@ -167,8 +160,7 @@ class InputUrl {
 
   Map<String, dynamic> toJson() => _$InputUrlToJson(this);
 
-  factory InputUrl.fromJson(Map<String, dynamic> json) =>
-      _$InputUrlFromJson(json);
+  factory InputUrl.fromJson(Map<String, dynamic> json) => _$InputUrlFromJson(json);
 }
 
 @JsonSerializable(fieldRename: FieldRename.snake)
@@ -180,16 +172,11 @@ class OverridenModelsItem {
   @JsonKey()
   final String importUrl;
 
-  OverridenModelsItem({
-    required this.fileName,
-    required this.overridenModels,
-    required this.importUrl,
-  });
+  OverridenModelsItem({required this.fileName, required this.overridenModels, required this.importUrl});
 
   Map<String, dynamic> toJson() => _$OverridenModelsItemToJson(this);
 
-  factory OverridenModelsItem.fromJson(Map<String, dynamic> json) =>
-      _$OverridenModelsItemFromJson(json);
+  factory OverridenModelsItem.fromJson(Map<String, dynamic> json) => _$OverridenModelsItemFromJson(json);
 }
 
 @JsonSerializable(fieldRename: FieldRename.snake)
@@ -201,14 +188,9 @@ class CustomScalar {
   @JsonKey(defaultValue: '')
   final String serialize;
 
-  factory CustomScalar.fromJson(Map<String, dynamic> json) =>
-      _$CustomScalarFromJson(json);
+  factory CustomScalar.fromJson(Map<String, dynamic> json) => _$CustomScalarFromJson(json);
 
-  CustomScalar({
-    required this.type,
-    required this.deserialize,
-    this.serialize = '',
-  });
+  CustomScalar({required this.type, required this.deserialize, this.serialize = ''});
 
   Map<String, dynamic> toJson() => _$CustomScalarToJson(this);
 }
@@ -218,8 +200,7 @@ class CustomAnnotationMap {
   CustomAnnotationMap({required this.typeName, required this.swaggerKey});
 
   /// Build a default value map from a JSON map.
-  factory CustomAnnotationMap.fromJson(Map<String, dynamic> json) =>
-      _$CustomAnnotationMapFromJson(json);
+  factory CustomAnnotationMap.fromJson(Map<String, dynamic> json) => _$CustomAnnotationMapFromJson(json);
 
   @JsonKey(defaultValue: '')
   final String typeName;

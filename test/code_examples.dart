@@ -1,5 +1,6 @@
 const String ref = '\$ref';
-const String modelWithParametersV3 = '''
+const String modelWithParametersV3 =
+    '''
 {
  "components": {
     "schemas": {

@@ -57,8 +57,7 @@ class SwaggerRequest {
 
   Map<String, dynamic> toJson() => _$SwaggerRequestToJson(this);
 
-  factory SwaggerRequest.fromJson(Map<String, dynamic> json) =>
-      _$SwaggerRequestFromJson(json);
+  factory SwaggerRequest.fromJson(Map<String, dynamic> json) => _$SwaggerRequestFromJson(json);
 }
 
 @JsonSerializable()
@@ -71,15 +70,11 @@ class RequestBody {
 
   bool get hasRef => ref.isNotEmpty;
 
-  RequestBody({
-    this.content,
-    this.ref = '',
-  });
+  RequestBody({this.content, this.ref = ''});
 
   Map<String, dynamic> toJson() => _$RequestBodyToJson(this);
 
-  factory RequestBody.fromJson(Map<String, dynamic> json) =>
-      _$RequestBodyFromJson(json);
+  factory RequestBody.fromJson(Map<String, dynamic> json) => _$RequestBodyFromJson(json);
 }
 
 RequestContent? _contentFromJson(Map<String, dynamic>? map) {
@@ -90,19 +85,15 @@ RequestContent? _contentFromJson(Map<String, dynamic>? map) {
   if (map.containsKey('multipart/form-data') &&
       !map.containsKey('application/json') &&
       !map.containsKey('application/x-www-form-urlencoded')) {
-    final multipart =
-        map['multipart/form-data']['schema'] as Map<String, dynamic>;
-    return RequestContent(
-        isMultipart: true, schema: SwaggerSchema.fromJson(multipart));
+    final multipart = map['multipart/form-data']['schema'] as Map<String, dynamic>;
+    return RequestContent(isMultipart: true, schema: SwaggerSchema.fromJson(multipart));
   }
 
   if (map.containsKey('application/x-www-form-urlencoded') &&
       !map.containsKey('application/json') &&
       !map.containsKey('multipart/form-data')) {
-    final multipart = map['application/x-www-form-urlencoded']['schema']
-        as Map<String, dynamic>;
-    return RequestContent(
-        isUrlencoded: true, schema: SwaggerSchema.fromJson(multipart));
+    final multipart = map['application/x-www-form-urlencoded']['schema'] as Map<String, dynamic>;
+    return RequestContent(isUrlencoded: true, schema: SwaggerSchema.fromJson(multipart));
   }
 
   final content = map.values.first as Map<String, dynamic>;
@@ -112,11 +103,7 @@ RequestContent? _contentFromJson(Map<String, dynamic>? map) {
 
 @JsonSerializable()
 class RequestContent {
-  RequestContent({
-    this.isMultipart,
-    this.isUrlencoded,
-    this.schema,
-  });
+  RequestContent({this.isMultipart, this.isUrlencoded, this.schema});
 
   @JsonKey(name: 'schema')
   final SwaggerSchema? schema;
@@ -126,8 +113,7 @@ class RequestContent {
 
   Map<String, dynamic> toJson() => _$RequestContentToJson(this);
 
-  factory RequestContent.fromJson(Map<String, dynamic> json) =>
-      _$RequestContentFromJson(json);
+  factory RequestContent.fromJson(Map<String, dynamic> json) => _$RequestContentFromJson(json);
 }
 
 List<String> _securityFromJson(List? map) {
@@ -135,10 +121,7 @@ List<String> _securityFromJson(List? map) {
     return [];
   }
 
-  final result = map
-      .map((e) => (e as Map<String, dynamic>?)?.keys)
-      .expand((ee) => ee?.toList() ?? <String>[])
-      .toList();
+  final result = map.map((e) => (e as Map<String, dynamic>?)?.keys).expand((ee) => ee?.toList() ?? <String>[]).toList();
 
   return result;
 }

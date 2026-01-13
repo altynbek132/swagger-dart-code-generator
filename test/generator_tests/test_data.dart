@@ -1,6 +1,7 @@
 const ref = '\$ref';
 
-const carsService = '''
+const carsService =
+    '''
 {
     "openapi": "3.0.0",
     "info": {

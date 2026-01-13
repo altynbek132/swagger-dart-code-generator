@@ -7,11 +7,7 @@ class SwaggerEnumsGeneratorV3 extends SwaggerEnumsGenerator {
   SwaggerEnumsGeneratorV3(super.options);
 
   @override
-  String generate({
-    required SwaggerRoot root,
-    required String fileName,
-    required List<EnumModel> allEnums,
-  }) {
+  String generate({required SwaggerRoot root, required String fileName, required List<EnumModel> allEnums}) {
     final components = root.components;
     final schemas = components?.schemas;
 
@@ -19,16 +15,8 @@ class SwaggerEnumsGeneratorV3 extends SwaggerEnumsGenerator {
 
     final requestBodies = components?.requestBodies ?? {};
 
-    requestBodies.addAll(
-        SwaggerModelsGeneratorV2(options).getRequestBodiesFromRequests(root));
+    requestBodies.addAll(SwaggerModelsGeneratorV2(options).getRequestBodiesFromRequests(root));
 
-    return generateFromMap(
-      root,
-      fileName,
-      schemas ?? {},
-      responses ?? {},
-      requestBodies,
-      allEnums,
-    );
+    return generateFromMap(root, fileName, schemas ?? {}, responses ?? {}, requestBodies, allEnums);
   }
 }

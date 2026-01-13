@@ -6,20 +6,9 @@ class SwaggerEnumsGeneratorV2 extends SwaggerEnumsGenerator {
   SwaggerEnumsGeneratorV2(super.options);
 
   @override
-  String generate({
-    required SwaggerRoot root,
-    required String fileName,
-    required List<EnumModel> allEnums,
-  }) {
+  String generate({required SwaggerRoot root, required String fileName, required List<EnumModel> allEnums}) {
     final definitions = root.definitions;
 
-    return generateFromMap(
-      root,
-      fileName,
-      definitions,
-      {},
-      {},
-      allEnums,
-    );
+    return generateFromMap(root, fileName, definitions, {}, {}, allEnums);
   }
 }

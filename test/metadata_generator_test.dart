@@ -5,10 +5,7 @@ import 'package:swagger_dart_code_generator/src/models/generator_options.dart';
 void main() {
   group('SwaggerMetaDataGenerator', () {
     test('should generate SwaggerMetaData class correctly', () {
-      final options = GeneratorOptions(
-        inputFolder: 'test/',
-        outputFolder: 'test/',
-      );
+      final options = GeneratorOptions(inputFolder: 'test/', outputFolder: 'test/');
       final generator = SwaggerMetaDataGenerator(options);
 
       final result = generator.generate();

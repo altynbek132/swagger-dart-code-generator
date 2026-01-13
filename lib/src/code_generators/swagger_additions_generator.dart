@@ -15,33 +15,34 @@ class SwaggerAdditionsGenerator extends SwaggerGeneratorBase {
 
   ///Generates index.dart for all generated services
   String generateIndexes(List<String> fileNames) {
-    final importsList = fileNames.map((key) {
-      final actualFileName = getFileNameBase(key);
-      final fileName = actualFileName
-          .replaceAll('-', '_')
-          .replaceAll('.json', '.swagger')
-          .replaceAll('.yaml', '.swagger');
-      final fileNameWithoutExtension = removeFileExtension(actualFileName);
-      final className = getClassNameFromFileName(actualFileName);
+    final importsList = fileNames
+        .map((key) {
+          final actualFileName = getFileNameBase(key);
+          final fileName = actualFileName
+              .replaceAll('-', '_')
+              .replaceAll('.json', '.swagger')
+              .replaceAll('.yaml', '.swagger');
+          final fileNameWithoutExtension = removeFileExtension(actualFileName);
+          final className = getClassNameFromFileName(actualFileName);
 
-      final exports = <String>[];
+          final exports = <String>[];
 
-      if (options.generateChopper && !options.buildOnlyModels) {
-        exports.add('export \'$fileName.dart\' show $className;');
-      } else if (options.generateRetrofit && !options.buildOnlyModels) {
-        exports.add(
-            'export \'$fileNameWithoutExtension.retrofit.swagger.dart\' show $className;');
-      }
+          if (options.generateChopper && !options.buildOnlyModels) {
+            exports.add('export \'$fileName.dart\' show $className;');
+          } else if (options.generateRetrofit && !options.buildOnlyModels) {
+            exports.add('export \'$fileNameWithoutExtension.retrofit.swagger.dart\' show $className;');
+          }
 
-      if (options.useFreezed) {
-        exports
-            .add('export \'$fileNameWithoutExtension.freezed.swagger.dart\';');
-      } else if (options.separateModels) {
-        exports.add('export \'$fileNameWithoutExtension.models.swagger.dart\';');
-      }
+          if (options.useFreezed) {
+            exports.add('export \'$fileNameWithoutExtension.freezed.swagger.dart\';');
+          } else if (options.separateModels) {
+            exports.add('export \'$fileNameWithoutExtension.models.swagger.dart\';');
+          }
 
-      return exports.join('\n');
-    }).where((element) => element.isNotEmpty).toList();
+          return exports.join('\n');
+        })
+        .where((element) => element.isNotEmpty)
+        .toList();
 
     importsList.sort();
 
@@ -73,8 +74,7 @@ final Map<Type, Object Function(Map<String, dynamic>)> $mappingVariableName = {}
         ? ''
         : "part '$swaggerFileName.swagger.chopper.dart';";
 
-    final overridenModels = options.overridenModels
-            .any((e) => e.fileName == swaggerFileName)
+    final overridenModels = options.overridenModels.any((e) => e.fileName == swaggerFileName)
         ? 'import \'${options.overridenModels.firstWhere((e) => e.fileName == swaggerFileName).importUrl}\';'
         : '';
 
@@ -88,12 +88,9 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart' show MultipartFile;
 import 'package:chopper/chopper.dart' as chopper;''';
 
-    final enumsImport = hasEnums
-        ? "import '$swaggerFileName.enums.swagger.dart' as enums;"
-        : '';
+    final enumsImport = hasEnums ? "import '$swaggerFileName.enums.swagger.dart' as enums;" : '';
 
-    final enumsExport =
-        hasEnums ? "export '$swaggerFileName.enums.swagger.dart';" : '';
+    final enumsExport = hasEnums ? "export '$swaggerFileName.enums.swagger.dart';" : '';
 
     result.writeln("""
 // coverage:ignore-file

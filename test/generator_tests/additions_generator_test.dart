@@ -4,10 +4,7 @@ import 'package:test/test.dart';
 
 void main() {
   group('SwaggerAdditionsGenerator', () {
-    final generator = SwaggerAdditionsGenerator(GeneratorOptions(
-      inputFolder: '',
-      outputFolder: '',
-    ));
+    final generator = SwaggerAdditionsGenerator(GeneratorOptions(inputFolder: '', outputFolder: ''));
 
     test('Should generate index with chopper', () {
       final result = generator.generateIndexes(['pet_service.json']);
@@ -15,22 +12,17 @@ void main() {
     });
 
     test('Should generate index with retrofit', () {
-      final generatorRetrofit = SwaggerAdditionsGenerator(GeneratorOptions(
-        inputFolder: '',
-        outputFolder: '',
-        generateChopper: false,
-        generateRetrofit: true,
-      ));
+      final generatorRetrofit = SwaggerAdditionsGenerator(
+        GeneratorOptions(inputFolder: '', outputFolder: '', generateChopper: false, generateRetrofit: true),
+      );
       final result = generatorRetrofit.generateIndexes(['pet_service.json']);
       expect(result, contains("export 'pet_service.retrofit.swagger.dart' show PetService;"));
     });
 
     test('Should generate index with separate models', () {
-      final generatorModels = SwaggerAdditionsGenerator(GeneratorOptions(
-        inputFolder: '',
-        outputFolder: '',
-        separateModels: true,
-      ));
+      final generatorModels = SwaggerAdditionsGenerator(
+        GeneratorOptions(inputFolder: '', outputFolder: '', separateModels: true),
+      );
       final result = generatorModels.generateIndexes(['pet_service.json']);
       expect(result, contains("export 'pet_service.models.swagger.dart';"));
     });

@@ -19,8 +19,7 @@ class SwaggerModelsGeneratorV3 extends SwaggerModelsGenerator {
     final requestBodies = components?.requestBodies ?? {};
     final responses = components?.responses ?? {};
 
-    requestBodies.addAll(
-        SwaggerModelsGeneratorV2(options).getRequestBodiesFromRequests(root));
+    requestBodies.addAll(SwaggerModelsGeneratorV2(options).getRequestBodiesFromRequests(root));
 
     final formattedRequestBodies = <String, SwaggerSchema>{};
     requestBodies.forEach((key, value) {
@@ -36,13 +35,11 @@ class SwaggerModelsGeneratorV3 extends SwaggerModelsGenerator {
       ...root.definitions,
       ...root.components?.schemas ?? {},
       ...formattedResponses,
-      ...formattedRequestBodies
+      ...formattedRequestBodies,
     };
 
     final distinctClasses = <String, SwaggerSchema>{};
-    allClasses.forEach(
-      (key, value) => distinctClasses[getValidatedClassName(key)] = value,
-    );
+    allClasses.forEach((key, value) => distinctClasses[getValidatedClassName(key)] = value);
 
     return generateBase(
       root: root,

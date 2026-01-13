@@ -14,17 +14,11 @@ import 'package:swagger_dart_code_generator/src/swagger_models/swagger_root.dart
 
 class SwaggerCodeGenerator {
   Map<int, SwaggerEnumsGenerator> _getEnumsMap(GeneratorOptions options) {
-    return <int, SwaggerEnumsGenerator>{
-      2: SwaggerEnumsGeneratorV2(options),
-      3: SwaggerEnumsGeneratorV3(options)
-    };
+    return <int, SwaggerEnumsGenerator>{2: SwaggerEnumsGeneratorV2(options), 3: SwaggerEnumsGeneratorV3(options)};
   }
 
   Map<int, SwaggerModelsGenerator> _getModelsMap(GeneratorOptions options) {
-    return <int, SwaggerModelsGenerator>{
-      2: SwaggerModelsGeneratorV2(options),
-      3: SwaggerModelsGeneratorV3(options)
-    };
+    return <int, SwaggerModelsGenerator>{2: SwaggerModelsGeneratorV2(options), 3: SwaggerModelsGeneratorV3(options)};
   }
 
   int _getApiVersion(SwaggerRoot root) {
@@ -36,8 +30,7 @@ class SwaggerCodeGenerator {
       _getSwaggerAdditionsGenerator(options).generateIndexes(fileNames);
 
   String generateConverterMappings(bool hasModels, GeneratorOptions options) =>
-      _getSwaggerAdditionsGenerator(options)
-          .generateConverterMappings(hasModels);
+      _getSwaggerAdditionsGenerator(options).generateConverterMappings(hasModels);
 
   String generateImportsContent(
     String swaggerFileName,
@@ -46,34 +39,23 @@ class SwaggerCodeGenerator {
     bool hasEnums,
     bool separateModels,
     GeneratorOptions options,
-  ) =>
-      _getSwaggerAdditionsGenerator(options).generateImportsContent(
-          swaggerFileName,
-          hasModels,
-          buildOnlyModels,
-          hasEnums,
-          separateModels,
-          options.generateChopper);
+  ) => _getSwaggerAdditionsGenerator(options).generateImportsContent(
+    swaggerFileName,
+    hasModels,
+    buildOnlyModels,
+    hasEnums,
+    separateModels,
+    options.generateChopper,
+  );
 
   List<EnumModel> generateAllEnums({
     required SwaggerRoot root,
     required String fileName,
     required GeneratorOptions options,
-  }) =>
-      _getSwaggerEnumsGenerator(root, options)
-          .generateAllEnums(fileName: fileName, root: root);
+  }) => _getSwaggerEnumsGenerator(root, options).generateAllEnums(fileName: fileName, root: root);
 
-  String generateEnums(
-    SwaggerRoot root,
-    String fileName,
-    List<EnumModel> allEnums,
-    GeneratorOptions options,
-  ) =>
-      _getSwaggerEnumsGenerator(root, options).generate(
-        root: root,
-        fileName: fileName,
-        allEnums: allEnums,
-      );
+  String generateEnums(SwaggerRoot root, String fileName, List<EnumModel> allEnums, GeneratorOptions options) =>
+      _getSwaggerEnumsGenerator(root, options).generate(root: root, fileName: fileName, allEnums: allEnums);
 
   String generateModels(
     SwaggerRoot root,
@@ -81,13 +63,10 @@ class SwaggerCodeGenerator {
     GeneratorOptions options,
     List<EnumModel> allEnums, {
     bool generateFreezed = false,
-  }) =>
-      _getSwaggerModelsGenerator(root, options).generate(
-        root: root,
-        fileName: fileName,
-        allEnums: allEnums,
-        generateFreezed: generateFreezed,
-      );
+  }) => _getSwaggerModelsGenerator(
+    root,
+    options,
+  ).generate(root: root, fileName: fileName, allEnums: allEnums, generateFreezed: generateFreezed);
 
   String generateRequests(
     SwaggerRoot root,
@@ -95,13 +74,10 @@ class SwaggerCodeGenerator {
     String fileName,
     GeneratorOptions options,
     List<EnumModel> allEnums,
-  ) =>
-      _getSwaggerRequestsGenerator(root, options).generate(
-        swaggerRoot: root,
-        className: className,
-        fileName: fileName,
-        allEnums: allEnums,
-      );
+  ) => _getSwaggerRequestsGenerator(
+    root,
+    options,
+  ).generate(swaggerRoot: root, className: className, fileName: fileName, allEnums: allEnums);
 
   String generateRetrofitRequests(
     SwaggerRoot root,
@@ -109,55 +85,32 @@ class SwaggerCodeGenerator {
     String fileName,
     GeneratorOptions options,
     List<EnumModel> allEnums,
-  ) =>
-      _getSwaggerRetrofitRequestsGenerator(root, options).generate(
-        swaggerRoot: root,
-        className: className,
-        fileName: fileName,
-        allEnums: allEnums,
-      );
+  ) => _getSwaggerRetrofitRequestsGenerator(
+    root,
+    options,
+  ).generate(swaggerRoot: root, className: className, fileName: fileName, allEnums: allEnums);
 
-  String generateMetaData(GeneratorOptions options) =>
-      _getSwaggerMetaDataGenerator(options).generate();
+  String generateMetaData(GeneratorOptions options) => _getSwaggerMetaDataGenerator(options).generate();
 
-  String generateCustomJsonConverter(
-          String fileName, GeneratorOptions options) =>
-      _getSwaggerAdditionsGenerator(options)
-          .generateCustomJsonConverter(fileName);
+  String generateCustomJsonConverter(String fileName, GeneratorOptions options) =>
+      _getSwaggerAdditionsGenerator(options).generateCustomJsonConverter(fileName);
 
-  String generateDateToJson(GeneratorOptions options) =>
-      _getSwaggerAdditionsGenerator(options).generateDateToJson();
+  String generateDateToJson(GeneratorOptions options) => _getSwaggerAdditionsGenerator(options).generateDateToJson();
 
-  SwaggerAdditionsGenerator _getSwaggerAdditionsGenerator(
-          GeneratorOptions options) =>
+  SwaggerAdditionsGenerator _getSwaggerAdditionsGenerator(GeneratorOptions options) =>
       SwaggerAdditionsGenerator(options);
 
-  SwaggerEnumsGenerator _getSwaggerEnumsGenerator(
-    SwaggerRoot root,
-    GeneratorOptions options,
-  ) =>
+  SwaggerEnumsGenerator _getSwaggerEnumsGenerator(SwaggerRoot root, GeneratorOptions options) =>
       _getEnumsMap(options)[_getApiVersion(root)]!;
 
-  SwaggerModelsGenerator _getSwaggerModelsGenerator(
-    SwaggerRoot root,
-    GeneratorOptions options,
-  ) =>
+  SwaggerModelsGenerator _getSwaggerModelsGenerator(SwaggerRoot root, GeneratorOptions options) =>
       _getModelsMap(options)[_getApiVersion(root)]!;
 
-  SwaggerRequestsGenerator _getSwaggerRequestsGenerator(
-    SwaggerRoot root,
-    GeneratorOptions options,
-  ) =>
+  SwaggerRequestsGenerator _getSwaggerRequestsGenerator(SwaggerRoot root, GeneratorOptions options) =>
       SwaggerRequestsGenerator(options);
 
-  SwaggerRetrofitRequestsGenerator _getSwaggerRetrofitRequestsGenerator(
-    SwaggerRoot root,
-    GeneratorOptions options,
-  ) =>
+  SwaggerRetrofitRequestsGenerator _getSwaggerRetrofitRequestsGenerator(SwaggerRoot root, GeneratorOptions options) =>
       SwaggerRetrofitRequestsGenerator(options);
 
-  SwaggerMetaDataGenerator _getSwaggerMetaDataGenerator(
-    GeneratorOptions options,
-  ) =>
-      SwaggerMetaDataGenerator(options);
+  SwaggerMetaDataGenerator _getSwaggerMetaDataGenerator(GeneratorOptions options) => SwaggerMetaDataGenerator(options);
 }

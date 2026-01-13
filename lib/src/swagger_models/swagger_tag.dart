@@ -8,8 +8,7 @@ part 'swagger_tag.g.dart';
 class SwaggerTag {
   SwaggerTag({this.name = '', this.description = ''});
 
-  factory SwaggerTag.fromJson(Map<String, dynamic> json) =>
-      _$SwaggerTagFromJson(json);
+  factory SwaggerTag.fromJson(Map<String, dynamic> json) => _$SwaggerTagFromJson(json);
 
   @JsonKey(name: 'name')
   String name;

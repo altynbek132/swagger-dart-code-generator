@@ -1,27 +1,6 @@
-const List<String> kKeyClasses = [
-  'Response',
-  'Request',
-  'Type',
-  'Query',
-  'Body',
-  'Method',
-  'Uri',
-  'List',
-];
+const List<String> kKeyClasses = ['Response', 'Request', 'Type', 'Query', 'Body', 'Method', 'Uri', 'List'];
 
-const kBasicTypes = [
-  'string',
-  'int',
-  'integer',
-  'double',
-  'float',
-  'bool',
-  'boolean',
-  'num',
-  'Object',
-  'String',
-  kMap,
-];
+const kBasicTypes = ['string', 'int', 'integer', 'double', 'float', 'bool', 'boolean', 'num', 'Object', 'String', kMap];
 
 const kBasicSwaggerTypes = [...kBasicTypes, 'number'];
 

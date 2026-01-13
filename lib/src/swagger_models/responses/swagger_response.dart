@@ -34,8 +34,7 @@ class SwaggerResponse {
 
   Map<String, dynamic> toJson() => _$SwaggerResponseToJson(this);
 
-  factory SwaggerResponse.fromJson(Map<String, dynamic> json) =>
-      _$SwaggerResponseFromJson(json);
+  factory SwaggerResponse.fromJson(Map<String, dynamic> json) => _$SwaggerResponseFromJson(json);
 }
 
 Content? _mapContent(Map<String, dynamic>? json) {
@@ -50,13 +49,7 @@ Content? _mapContent(Map<String, dynamic>? json) {
 
 @JsonSerializable()
 class Content {
-  Content({
-    this.items,
-    this.ref = '',
-    this.responseType = '',
-    this.type = '',
-    this.schema,
-  });
+  Content({this.items, this.ref = '', this.responseType = '', this.type = '', this.schema});
 
   @JsonKey(name: 'responseType')
   final String responseType;
@@ -77,6 +70,5 @@ class Content {
 
   Map<String, dynamic> toJson() => _$ContentToJson(this);
 
-  factory Content.fromJson(Map<String, dynamic> json) =>
-      _$ContentFromJson(json);
+  factory Content.fromJson(Map<String, dynamic> json) => _$ContentFromJson(json);
 }

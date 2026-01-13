@@ -66,14 +66,12 @@ class SwaggerRoot {
   factory SwaggerRoot.parse(String encodedJson) =>
       SwaggerRoot.fromJson(jsonDecode(encodedJson) as Map<String, dynamic>);
 
-  factory SwaggerRoot.fromJson(Map<String, dynamic> json) =>
-      _$SwaggerRootFromJson(json);
+  factory SwaggerRoot.fromJson(Map<String, dynamic> json) => _$SwaggerRootFromJson(json);
 
   static final SwaggerRoot empty = SwaggerRoot.fromJson({});
 }
 
-Map<String, SwaggerRequestParameter> _mapSecurityDefinitions(
-    Map<String, dynamic>? definitions) {
+Map<String, SwaggerRequestParameter> _mapSecurityDefinitions(Map<String, dynamic>? definitions) {
   if (definitions == null) {
     return {};
   }
@@ -95,23 +93,17 @@ Map<String, SwaggerPath> _mapPaths(Map<String, dynamic>? paths) {
   return paths.map((path, pathValue) {
     final value = pathValue as Map<String, dynamic>;
     final parameters = value['parameters'] as List<dynamic>?;
-    value.removeWhere(
-        (key, value) => !supportedRequestTypes.contains(key.toLowerCase()));
+    value.removeWhere((key, value) => !supportedRequestTypes.contains(key.toLowerCase()));
 
     return MapEntry(
       path,
       SwaggerPath(
-        parameters: parameters
-                ?.map((parameter) => SwaggerRequestParameter.fromJson(
-                    parameter as Map<String, dynamic>))
+        parameters:
+            parameters
+                ?.map((parameter) => SwaggerRequestParameter.fromJson(parameter as Map<String, dynamic>))
                 .toList() ??
             [],
-        requests: value.map(
-          (key, request) => MapEntry(
-            key,
-            SwaggerRequest.fromJson(request as Map<String, dynamic>),
-          ),
-        ),
+        requests: value.map((key, request) => MapEntry(key, SwaggerRequest.fromJson(request as Map<String, dynamic>))),
       ),
     );
   });
