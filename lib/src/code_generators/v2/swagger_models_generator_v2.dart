@@ -12,6 +12,7 @@ class SwaggerModelsGeneratorV2 extends SwaggerModelsGenerator {
     required SwaggerRoot root,
     required String fileName,
     required List<EnumModel> allEnums,
+    bool generateFreezed = false,
   }) {
     final definitions = root.definitions;
     return generateBase(
@@ -20,6 +21,7 @@ class SwaggerModelsGeneratorV2 extends SwaggerModelsGenerator {
       classes: definitions,
       generateEnumsMethods: true,
       allEnums: allEnums,
+      generateFreezed: generateFreezed,
     );
   }
 

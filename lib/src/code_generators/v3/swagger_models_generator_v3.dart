@@ -13,6 +13,7 @@ class SwaggerModelsGeneratorV3 extends SwaggerModelsGenerator {
     required SwaggerRoot root,
     required String fileName,
     required List<EnumModel> allEnums,
+    bool generateFreezed = false,
   }) {
     final components = root.components;
     final requestBodies = components?.requestBodies ?? {};
@@ -49,6 +50,7 @@ class SwaggerModelsGeneratorV3 extends SwaggerModelsGenerator {
       classes: distinctClasses,
       generateEnumsMethods: true,
       allEnums: allEnums,
+      generateFreezed: generateFreezed,
     );
   }
 

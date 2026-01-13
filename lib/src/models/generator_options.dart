@@ -41,9 +41,10 @@ class GeneratorOptions {
     this.multipartFileType = 'List<int>',
     this.urlencodedFileType = 'Map<String, String>',
     this.generateFirstSucceedResponse = true,
-    this.customAnnotations = const[],
+    this.customAnnotations = const [],
     this.generateChopper = true,
     this.generateRetrofit = true,
+    this.useFreezed = false,
   });
 
   /// Build options from a JSON map.
@@ -87,6 +88,7 @@ class GeneratorOptions {
   final List<String> importPaths;
   final String customReturnType;
   final List<String> excludePaths;
+  final bool useFreezed;
 
   @JsonKey(defaultValue: <CustomAnnotationMap>[])
   final List<CustomAnnotationMap> customAnnotations;

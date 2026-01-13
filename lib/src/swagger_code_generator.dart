@@ -79,12 +79,14 @@ class SwaggerCodeGenerator {
     SwaggerRoot root,
     String fileName,
     GeneratorOptions options,
-    List<EnumModel> allEnums,
-  ) =>
+    List<EnumModel> allEnums, {
+    bool generateFreezed = false,
+  }) =>
       _getSwaggerModelsGenerator(root, options).generate(
         root: root,
         fileName: fileName,
         allEnums: allEnums,
+        generateFreezed: generateFreezed,
       );
 
   String generateRequests(

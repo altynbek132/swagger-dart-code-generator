@@ -118,6 +118,7 @@ GeneratorOptions _$GeneratorOptionsFromJson(Map json) => GeneratorOptions(
       json['generate_first_succeed_response'] as bool? ?? true,
   generateChopper: json['generate_chopper'] as bool? ?? true,
   generateRetrofit: json['generate_retrofit'] as bool? ?? true,
+  useFreezed: json['use_freezed'] as bool? ?? false,
   customAnnotations:
       (json['custom_annotations'] as List<dynamic>?)
           ?.map(
@@ -169,6 +170,7 @@ Map<String, dynamic> _$GeneratorOptionsToJson(
   'import_paths': instance.importPaths,
   'custom_return_type': instance.customReturnType,
   'exclude_paths': instance.excludePaths,
+  'use_freezed': instance.useFreezed,
   'custom_annotations': instance.customAnnotations,
 };
 
