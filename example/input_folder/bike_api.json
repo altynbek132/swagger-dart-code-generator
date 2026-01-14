@@ -1,0 +1,1332 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/v1/rides/reserve": {
+      "post": {
+        "operationId": "RideController_reserveRide_v1",
+        "parameters": [
+          {
+            "in": "header",
+            "required": false,
+            "name": "x-custom-lang",
+            "schema": {
+              "example": "en"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReserveRideDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Ride reserved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ride"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Reserve a ride",
+        "tags": ["Rides"]
+      }
+    },
+    "/api/v1/rides/{id}/start": {
+      "post": {
+        "operationId": "RideController_startRide_v1",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "header",
+            "required": false,
+            "name": "x-custom-lang",
+            "schema": {
+              "example": "en"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StartRideDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ride started successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ride"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Start a ride",
+        "tags": ["Rides"]
+      }
+    },
+    "/api/v1/rides/{id}/pause": {
+      "post": {
+        "operationId": "RideController_pauseRide_v1",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "header",
+            "required": false,
+            "name": "x-custom-lang",
+            "schema": {
+              "example": "en"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ride paused successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RideEvent"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Pause a ride",
+        "tags": ["Rides"]
+      }
+    },
+    "/api/v1/rides/{id}/resume": {
+      "post": {
+        "operationId": "RideController_resumeRide_v1",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "header",
+            "required": false,
+            "name": "x-custom-lang",
+            "schema": {
+              "example": "en"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ride resumed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RideEvent"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Resume a paused ride",
+        "tags": ["Rides"]
+      }
+    },
+    "/api/v1/rides/{id}/finish": {
+      "post": {
+        "operationId": "RideController_finishRide_v1",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "header",
+            "required": false,
+            "name": "x-custom-lang",
+            "schema": {
+              "example": "en"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FinishRideDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ride finished successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ride"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Finish a ride",
+        "tags": ["Rides"]
+      }
+    },
+    "/api/v1/rides": {
+      "get": {
+        "operationId": "RideController_getHello_v1",
+        "parameters": [
+          {
+            "in": "header",
+            "required": false,
+            "name": "x-custom-lang",
+            "schema": {
+              "example": "en"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Get hello message",
+        "tags": ["Rides"]
+      }
+    },
+    "/api/v1/bikes": {
+      "get": {
+        "operationId": "BikesController_list_v1",
+        "parameters": [
+          {
+            "name": "page",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "header",
+            "required": false,
+            "name": "x-custom-lang",
+            "schema": {
+              "example": "en"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of bikes"
+          }
+        },
+        "summary": "List all bikes",
+        "tags": ["Bikes"]
+      },
+      "post": {
+        "operationId": "BikesController_create_v1",
+        "parameters": [
+          {
+            "in": "header",
+            "required": false,
+            "name": "x-custom-lang",
+            "schema": {
+              "example": "en"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBikeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Bike created successfully"
+          }
+        },
+        "summary": "Create a new bike",
+        "tags": ["Bikes"]
+      }
+    },
+    "/api/v1/bikes/by-imei/{imei}": {
+      "get": {
+        "operationId": "BikesController_getByImei_v1",
+        "parameters": [
+          {
+            "name": "imei",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "required": false,
+            "name": "x-custom-lang",
+            "schema": {
+              "example": "en"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Bike found"
+          },
+          "404": {
+            "description": "Bike not found"
+          }
+        },
+        "summary": "Get bike by IMEI",
+        "tags": ["Bikes"]
+      }
+    },
+    "/api/v1/bikes/{id}": {
+      "get": {
+        "operationId": "BikesController_getById_v1",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "header",
+            "required": false,
+            "name": "x-custom-lang",
+            "schema": {
+              "example": "en"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Bike found"
+          },
+          "404": {
+            "description": "Bike not found"
+          }
+        },
+        "summary": "Get bike by ID",
+        "tags": ["Bikes"]
+      },
+      "patch": {
+        "operationId": "BikesController_update_v1",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "header",
+            "required": false,
+            "name": "x-custom-lang",
+            "schema": {
+              "example": "en"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBikeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Bike updated successfully"
+          },
+          "404": {
+            "description": "Bike not found"
+          }
+        },
+        "summary": "Update a bike",
+        "tags": ["Bikes"]
+      },
+      "delete": {
+        "operationId": "BikesController_delete_v1",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "header",
+            "required": false,
+            "name": "x-custom-lang",
+            "schema": {
+              "example": "en"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Bike deleted successfully"
+          },
+          "404": {
+            "description": "Bike not found"
+          }
+        },
+        "summary": "Delete a bike",
+        "tags": ["Bikes"]
+      }
+    },
+    "/api/v1/bikes/{id}/commands": {
+      "post": {
+        "operationId": "BikesController_sendCommand_v1",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "header",
+            "required": false,
+            "name": "x-custom-lang",
+            "schema": {
+              "example": "en"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Command sent successfully"
+          }
+        },
+        "summary": "Send a command to a bike",
+        "tags": ["Bikes"]
+      }
+    },
+    "/api/v1/bikes/{id}/unlock": {
+      "post": {
+        "operationId": "BikesController_unlock_v1",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "header",
+            "required": false,
+            "name": "x-custom-lang",
+            "schema": {
+              "example": "en"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Unlock command sent successfully"
+          }
+        },
+        "summary": "Unlock a bike",
+        "tags": ["Bikes"]
+      }
+    },
+    "/api/v1/bikes/{id}/lock": {
+      "post": {
+        "operationId": "BikesController_lock_v1",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "header",
+            "required": false,
+            "name": "x-custom-lang",
+            "schema": {
+              "example": "en"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Lock command sent successfully"
+          }
+        },
+        "summary": "Lock a bike",
+        "tags": ["Bikes"]
+      }
+    },
+    "/api/v1/bikes/{id}/power-off": {
+      "post": {
+        "operationId": "BikesController_powerOff_v1",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "header",
+            "required": false,
+            "name": "x-custom-lang",
+            "schema": {
+              "example": "en"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Power off command sent successfully"
+          }
+        },
+        "summary": "Power off a bike",
+        "tags": ["Bikes"]
+      }
+    },
+    "/api/v1/bikes/{id}/restart": {
+      "post": {
+        "operationId": "BikesController_restart_v1",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "header",
+            "required": false,
+            "name": "x-custom-lang",
+            "schema": {
+              "example": "en"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Restart command sent successfully"
+          }
+        },
+        "summary": "Restart a bike",
+        "tags": ["Bikes"]
+      }
+    },
+    "/api/v1/bikes/{id}/open-battery-lock": {
+      "post": {
+        "operationId": "BikesController_openBatteryLock_v1",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "header",
+            "required": false,
+            "name": "x-custom-lang",
+            "schema": {
+              "example": "en"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Battery lock command sent successfully"
+          }
+        },
+        "summary": "Open battery lock",
+        "tags": ["Bikes"]
+      }
+    },
+    "/api/v1/bikes/{id}/open-cable-lock": {
+      "post": {
+        "operationId": "BikesController_openCableLock_v1",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "header",
+            "required": false,
+            "name": "x-custom-lang",
+            "schema": {
+              "example": "en"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Cable lock command sent successfully"
+          }
+        },
+        "summary": "Open cable lock",
+        "tags": ["Bikes"]
+      }
+    },
+    "/api/v1/bikes/{id}/play-voice": {
+      "post": {
+        "operationId": "BikesController_playVoice_v1",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "header",
+            "required": false,
+            "name": "x-custom-lang",
+            "schema": {
+              "example": "en"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Voice command sent successfully"
+          }
+        },
+        "summary": "Play voice on bike",
+        "tags": ["Bikes"]
+      }
+    },
+    "/api/v1/bikes/{id}/get-position": {
+      "post": {
+        "operationId": "BikesController_getPosition_v1",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "header",
+            "required": false,
+            "name": "x-custom-lang",
+            "schema": {
+              "example": "en"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Position request sent successfully"
+          }
+        },
+        "summary": "Get bike position",
+        "tags": ["Bikes"]
+      }
+    },
+    "/api/v1/bikes/{id}/r0-messages": {
+      "get": {
+        "operationId": "BikesController_getR0Messages_v1",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "header",
+            "required": false,
+            "name": "x-custom-lang",
+            "schema": {
+              "example": "en"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "R0 messages retrieved successfully"
+          }
+        },
+        "summary": "Get R0 messages for a bike",
+        "tags": ["Bikes"]
+      }
+    },
+    "/api/v1/bikes/{id}/r0-messages/latest": {
+      "get": {
+        "operationId": "BikesController_getLatestR0Message_v1",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "header",
+            "required": false,
+            "name": "x-custom-lang",
+            "schema": {
+              "example": "en"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Latest R0 message retrieved successfully"
+          },
+          "404": {
+            "description": "No R0 messages found"
+          }
+        },
+        "summary": "Get latest R0 message for a bike",
+        "tags": ["Bikes"]
+      }
+    },
+    "/api/v1/bikes/{id}/battery": {
+      "get": {
+        "operationId": "BikesController_getBattery_v1",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "header",
+            "required": false,
+            "name": "x-custom-lang",
+            "schema": {
+              "example": "en"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Battery information retrieved successfully"
+          }
+        },
+        "summary": "Get bike battery information",
+        "tags": ["Bikes"]
+      }
+    },
+    "/api/v1/bikes/{id}/location": {
+      "get": {
+        "operationId": "BikesController_getLocation_v1",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "header",
+            "required": false,
+            "name": "x-custom-lang",
+            "schema": {
+              "example": "en"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Location information retrieved successfully"
+          }
+        },
+        "summary": "Get bike location information",
+        "tags": ["Bikes"]
+      }
+    }
+  },
+  "info": {
+    "title": "API",
+    "description": "API docs",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "ReserveRideDto": {
+        "type": "object",
+        "properties": {
+          "bikeId": {
+            "type": "number",
+            "example": 1
+          },
+          "tariffPlanId": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": ["bikeId"]
+      },
+      "City": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string",
+            "example": "New York"
+          },
+          "countryCode": {
+            "type": "string",
+            "example": "US"
+          },
+          "timezone": {
+            "type": "string",
+            "example": "America/New_York"
+          }
+        },
+        "required": ["id", "name", "countryCode", "timezone"]
+      },
+      "Bike": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "code": {
+            "type": "string",
+            "example": "BIKE-001"
+          },
+          "imei": {
+            "type": "string",
+            "example": "123456789012345",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "example": "Bike 001",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "enum": ["available", "in_use", "maintenance", "lost"],
+            "example": "available"
+          },
+          "type": {
+            "type": "string",
+            "example": "standard",
+            "nullable": true
+          },
+          "currentBatteryPercent": {
+            "type": "number",
+            "example": 85,
+            "nullable": true
+          },
+          "batteryLevel": {
+            "type": "number",
+            "example": 85,
+            "nullable": true
+          },
+          "internalBatteryLevel": {
+            "type": "number",
+            "example": 3.7,
+            "nullable": true
+          },
+          "lastKnownLat": {
+            "type": "number",
+            "example": 40.7128,
+            "nullable": true
+          },
+          "lastKnownLng": {
+            "type": "number",
+            "example": -74.006,
+            "nullable": true
+          },
+          "latitude": {
+            "type": "number",
+            "example": 40.7128,
+            "nullable": true
+          },
+          "longitude": {
+            "type": "number",
+            "example": -74.006,
+            "nullable": true
+          },
+          "firmwareVersion": {
+            "type": "string",
+            "example": "V1.0.0",
+            "nullable": true
+          },
+          "lastTelemetryAt": {
+            "format": "date-time",
+            "type": "string",
+            "nullable": true
+          },
+          "lastSeenAt": {
+            "format": "date-time",
+            "type": "string",
+            "nullable": true
+          },
+          "city": {
+            "$ref": "#/components/schemas/City"
+          },
+          "cityId": {
+            "type": "number",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "code",
+          "imei",
+          "name",
+          "status",
+          "type",
+          "currentBatteryPercent",
+          "batteryLevel",
+          "internalBatteryLevel",
+          "lastKnownLat",
+          "lastKnownLng",
+          "latitude",
+          "longitude",
+          "firmwareVersion",
+          "lastTelemetryAt",
+          "lastSeenAt",
+          "city",
+          "cityId"
+        ]
+      },
+      "Tariff": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string",
+            "example": "Standard Plan"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["per_minute", "per_hour", "day_pass", "subscription"],
+            "example": "per_minute"
+          },
+          "basePrice": {
+            "type": "number",
+            "example": 1
+          },
+          "pricePerMinute": {
+            "type": "number",
+            "example": 0.15
+          },
+          "minCharge": {
+            "type": "number",
+            "example": 2
+          },
+          "currency": {
+            "type": "string",
+            "example": "USD"
+          },
+          "activeFrom": {
+            "format": "date-time",
+            "type": "string",
+            "nullable": true
+          },
+          "activeTo": {
+            "format": "date-time",
+            "type": "string",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean",
+            "example": true
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "type",
+          "basePrice",
+          "pricePerMinute",
+          "minCharge",
+          "currency",
+          "activeFrom",
+          "activeTo",
+          "isActive"
+        ]
+      },
+      "Ride": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "userId": {
+            "type": "number"
+          },
+          "bike": {
+            "$ref": "#/components/schemas/Bike"
+          },
+          "bikeId": {
+            "type": "number",
+            "nullable": true
+          },
+          "startTime": {
+            "format": "date-time",
+            "type": "string",
+            "nullable": true
+          },
+          "endTime": {
+            "format": "date-time",
+            "type": "string",
+            "nullable": true
+          },
+          "startLat": {
+            "type": "number",
+            "nullable": true
+          },
+          "startLng": {
+            "type": "number",
+            "nullable": true
+          },
+          "endLat": {
+            "type": "number",
+            "nullable": true
+          },
+          "endLng": {
+            "type": "number",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "enum": ["initiated", "active", "finished", "cancelled"],
+            "example": "initiated"
+          },
+          "tariff": {
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Tariff"
+              }
+            ]
+          },
+          "tariffPlanId": {
+            "type": "number",
+            "nullable": true
+          },
+          "totalDurationSec": {
+            "type": "number",
+            "nullable": true
+          },
+          "totalPrice": {
+            "type": "number",
+            "nullable": true
+          },
+          "currency": {
+            "type": "string",
+            "nullable": true
+          },
+          "billingStatus": {
+            "type": "string",
+            "enum": ["pending", "charged", "failed"],
+            "example": "pending",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "userId",
+          "bike",
+          "bikeId",
+          "startTime",
+          "endTime",
+          "startLat",
+          "startLng",
+          "endLat",
+          "endLng",
+          "status",
+          "tariff",
+          "tariffPlanId",
+          "totalDurationSec",
+          "totalPrice",
+          "currency",
+          "billingStatus"
+        ]
+      },
+      "StartRideDto": {
+        "type": "object",
+        "properties": {
+          "lat": {
+            "type": "number",
+            "example": 40.7128
+          },
+          "lng": {
+            "type": "number",
+            "example": -74.006
+          }
+        },
+        "required": ["lat", "lng"]
+      },
+      "RideEvent": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "ride": {
+            "$ref": "#/components/schemas/Ride"
+          },
+          "rideId": {
+            "type": "number"
+          },
+          "timestamp": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "eventType": {
+            "type": "string",
+            "enum": ["position_update", "pause", "resume", "error"],
+            "example": "position_update"
+          },
+          "lat": {
+            "type": "number",
+            "nullable": true
+          },
+          "lng": {
+            "type": "number",
+            "nullable": true
+          },
+          "extraJson": {
+            "type": "object",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "ride",
+          "rideId",
+          "timestamp",
+          "eventType",
+          "lat",
+          "lng",
+          "extraJson"
+        ]
+      },
+      "FinishRideDto": {
+        "type": "object",
+        "properties": {
+          "lat": {
+            "type": "number",
+            "example": 40.7128
+          },
+          "lng": {
+            "type": "number",
+            "example": -74.006
+          }
+        },
+        "required": ["lat", "lng"]
+      },
+      "CityDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          }
+        },
+        "required": ["id"]
+      },
+      "CreateBikeDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "BIKE-001"
+          },
+          "imei": {
+            "type": "string",
+            "example": "123456789012345"
+          },
+          "name": {
+            "type": "string",
+            "example": "Bike 001"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["available", "in_use", "maintenance", "lost"],
+            "example": "available"
+          },
+          "type": {
+            "type": "string",
+            "example": "standard"
+          },
+          "currentBatteryPercent": {
+            "type": "number",
+            "example": 85
+          },
+          "lastKnownLat": {
+            "type": "number",
+            "example": 40.7128
+          },
+          "lastKnownLng": {
+            "type": "number",
+            "example": -74.006
+          },
+          "city": {
+            "$ref": "#/components/schemas/CityDto"
+          },
+          "cityId": {
+            "type": "number"
+          }
+        },
+        "required": ["code"]
+      },
+      "UpdateBikeDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "BIKE-001"
+          },
+          "imei": {
+            "type": "string",
+            "example": "123456789012345"
+          },
+          "name": {
+            "type": "string",
+            "example": "Bike 001"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["available", "in_use", "maintenance", "lost"],
+            "example": "available"
+          },
+          "type": {
+            "type": "string",
+            "example": "standard"
+          },
+          "currentBatteryPercent": {
+            "type": "number",
+            "example": 85
+          },
+          "lastKnownLat": {
+            "type": "number",
+            "example": 40.7128
+          },
+          "lastKnownLng": {
+            "type": "number",
+            "example": -74.006
+          },
+          "city": {
+            "$ref": "#/components/schemas/CityDto"
+          },
+          "cityId": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}

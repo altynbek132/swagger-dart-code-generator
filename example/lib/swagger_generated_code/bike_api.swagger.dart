@@ -7,8 +7,8 @@ import 'package:json_annotation/json_annotation.dart' as json;
 import 'package:collection/collection.dart';
 import 'dart:convert';
 
-import 'pet_service_yaml.freezed.swagger.dart';
-import 'pet_service_yaml.enums.swagger.dart' as enums;
-import 'pet_service_yaml.metadata.swagger.dart';
-export 'pet_service_yaml.enums.swagger.dart';
-export 'pet_service_yaml.freezed.swagger.dart';
+import 'bike_api.freezed.swagger.dart';
+import 'bike_api.enums.swagger.dart' as enums;
+import 'bike_api.metadata.swagger.dart';
+export 'bike_api.enums.swagger.dart';
+export 'bike_api.freezed.swagger.dart';
